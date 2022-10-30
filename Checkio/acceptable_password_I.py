@@ -14,7 +14,7 @@
 # Для чего это нужно: Для проверки заполнения пароля. Кроме того, полезно будет научиться оценивать задачи.
 
 def is_acceptable_password(password: str) -> bool:
-    return True if len(password) > 6 else False
+    return len(password) > 6
 
 
 print(is_acceptable_password("short"))       # False

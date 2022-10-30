@@ -13,7 +13,6 @@
 # assert is_acceptable_password("ashort") == False
 # assert is_acceptable_password("muchlonger5") == True
 # How it’s used: For password verification form. Also it's good to learn how the task can be evaluated.
-
 def is_acceptable_password(password: str) -> bool:
     return len(password) > 6 and any(i.isdigit() for i in password) and any(i.isalpha() for i in password)
 

@@ -12,7 +12,6 @@
 # assert is_acceptable_password("muchlonger") == True
 # assert is_acceptable_password("ashort") == False
 # Для чего это нужно: Для проверки заполнения пароля. Кроме того, полезно будет научиться оценивать задачи.
-
 def is_acceptable_password(password: str) -> bool:
     return len(password) > 6
 

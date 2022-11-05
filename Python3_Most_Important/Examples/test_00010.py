@@ -1,0 +1,8 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+# Вывод строк документирования посредством атрибута __doc__:
+import test_00008  # Подключаем файл test_00008.py
+print(test_00008.__doc__)
+print(test_00008.func.__doc__)
+input()

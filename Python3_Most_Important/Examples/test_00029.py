@@ -20,3 +20,4 @@ def password_generator(count_char=8):
 # Вызываю функцию:
 print(password_generator(10))  # Выведет что-то вроде ngODHEBJBx
 print(password_generator())    # Выведет что-то вроде ZxcpkFSO
+print(password_generator(15))  # Выведет что-то вроде 3hFWU!d1НАGibсG

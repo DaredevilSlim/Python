@@ -10,11 +10,6 @@
 # should contain at least 3 different letters (or digits) even if it is longer than 10
 # Input: A string.
 # Output: A bool.
-# Examples:
-# print(is_acceptable_password("short"))  #False
-# print(is_acceptable_password("muchlonger"))  #False
-# print(is_acceptable_password("ashort"))  #False
-# print(is_acceptable_password("muchlonger5"))  #True
 # How it’s used: For password verification form. Also it's good to learn how the task can be evaluated.
 
 def is_acceptable_password(password: str) -> bool:

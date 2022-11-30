@@ -8,11 +8,6 @@
 # if the password is longer than 9 - previous rule (about one digit), is not required.
 # Input: A string.
 # Output: A bool.
-# Examples:
-# assert is_acceptable_password("short") == False
-# assert is_acceptable_password("muchlonger") == False
-# assert is_acceptable_password("ashort") == False
-# assert is_acceptable_password("muchlonger5") == True
 # How it’s used: For password verification form. Also it's good to learn how the task can be evaluated.
 
 def is_acceptable_password(password: str) -> bool:

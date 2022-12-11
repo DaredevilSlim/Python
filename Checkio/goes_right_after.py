@@ -12,7 +12,9 @@
 # Output: A bool.
 
 def goes_after(word: str, first: str, second: str) -> bool:
-    return word.find(first) >= 0 and word.find(second) == word.find(first) + 1
+    first = word.find(first)
+    second = word.find(second)
+    return first >= 0 and second == first + 1
 
 
 print(goes_after("world", "w", "o"))      # True

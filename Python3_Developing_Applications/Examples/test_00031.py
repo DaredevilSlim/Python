@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import re  # Подключаем модуль re
+
+# Проверка наличия целого числа в строке
+p = re.compile(r'^[0-9]+$', re.S)
+if p.search('245'):
+    print('Число')     # Выведет: Число
+else:
+    print('Не число')
+if p.search('Строка245'):
+    print('Число')
+else:
+    print('He число')  # Выведет: Не число
+input()

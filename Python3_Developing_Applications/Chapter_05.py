@@ -260,7 +260,7 @@ print(random.uniform(0, 10))
 print(random.randint(0, 10))
 print(random.randint(0, 10))
 
-# randrange([<Начало>, ]<Конец>[, <Шаг>]) - возвращает случайный элемент из создаваемого «за кадром» диапазона:
+# randrange([<Начало>, ]<Конец>[, <Шаг>]) - возвращает случайный элемент из создаваемого 'за кадром' диапазона:
 print(random.randrange(10))
 print(random.randrange(0, 10))
 print(random.randrange(0, 10, 2))

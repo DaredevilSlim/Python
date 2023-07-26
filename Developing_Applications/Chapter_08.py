@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import copy       # Подключаем модуль сору
+import copy       # Подключаем модуль copy
 import math       # Подключаем модуль math
 import random     # Подключаем модуль random
 import itertools  # Подключаем модуль itertools

@@ -17,11 +17,11 @@ def create_zigzag(rows: int, cols: int, start: int = 1) -> list[list[int]]:
     return new
 
 
-print(create_zigzag(3, 5))          # [[1, 2, 3, 4, 5], [10, 9, 8, 7, 6], [11, 12, 13, 14, 15]]
-print(create_zigzag(5, 1))          # [[1], [2], [3], [4], [5]]
-print(create_zigzag(4, 2))          # [[1, 2], [4, 3], [5, 6], [8, 7]]
-print(create_zigzag(0, 3))          # []
-print(create_zigzag(3, 0))          # [[], [], []]
-print(create_zigzag(0, 0))          # []
-print(create_zigzag(10, 1))         # [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10]]
+print(create_zigzag(3, 5))     # [[1, 2, 3, 4, 5], [10, 9, 8, 7, 6], [11, 12, 13, 14, 15]]
+print(create_zigzag(5, 1))     # [[1], [2], [3], [4], [5]]
+print(create_zigzag(4, 2))     # [[1, 2], [4, 3], [5, 6], [8, 7]]
+print(create_zigzag(0, 3))     # []
+print(create_zigzag(3, 0))     # [[], [], []]
+print(create_zigzag(0, 0))     # []
+print(create_zigzag(10, 1))    # [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10]]
 print(create_zigzag(3, 3, 5))  # [[5, 6, 7], [10, 9, 8], [11, 12, 13]]

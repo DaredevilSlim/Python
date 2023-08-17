@@ -14,17 +14,28 @@ def long_repeat(line: str) -> int:
     """
     length the longest substring that consists of the same char
     """
+    if not line:
+        return 0
+    if len(line) == 1:
+        return 1
     a = 0
-    b = ''
-    c = 1
-    new = []
-    while a < (len(line) - 1):
-        b = line[a]
-        while b == line[a+1]:
-            
-
-    return 0
+    l = []
+    for i in range(len(line) - 1):
+        l.append(0)
+        l[a] += 1
+        if line[i] == line[i+1]:
+            if i+1 == len(line) - 1:
+                l[a-1] += 1
+        else:
+            a += 1
+    return max(l)
 
 
 print(long_repeat('sdsffffse'))     # 4
 print(long_repeat('ddvvrwwwrggg'))  # 3
+print(long_repeat(''))              # 0
+print(long_repeat('aa'))            # 2
+print(long_repeat('abababaab'))     # 2
+print(long_repeat('abababa'))       # 1
+print(long_repeat('a'))             # 1
+

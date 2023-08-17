@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from decimal import Decimal     # Подключаем из модуля decimal содержащийся в нем объект Decimal
-from fractions import Fraction  # Подключаем из модуля fractions содержащийся в нем объект Fraction
-import math                     # Подключаем модуль math
-import random                   # Подключаем модуль random
+# Подключаем модуль math
+import math
+# Подключаем модуль random
+import random
+# Подключаем из модуля decimal содержащийся в нем объект Decimal
+from decimal import Decimal
+# Подключаем из модуля fractions содержащийся в нем объект Fraction
+from fractions import Fraction
 
 # Глава 5
 # Числа

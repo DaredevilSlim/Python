@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import math     # Подключаем модуль math
-import locale   # Подключаем модуль locale
-import keyword  # Подключаем модуль keyword
-import pickle   # Подключаем модуль pickle
 import hashlib  # Подключаем модуль hashlib
+import keyword  # Подключаем модуль keyword
+import locale  # Подключаем модуль locale
+import math  # Подключаем модуль math
+import pickle  # Подключаем модуль pickle
 
 # ГЛАВА 6
 # Строки и двоичные данные

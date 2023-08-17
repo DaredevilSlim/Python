@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
-from sys import stdout  # Подключаем из модуля sys содержащийся в нем объект stdout
 import builtins
+from sys import stdout
+# Подключаем из модуля sys содержащийся в нем объект stdout
 
 # Глава 1
 # 1.4. Принципы написания Python-программ

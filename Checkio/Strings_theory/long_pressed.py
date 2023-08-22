@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 # "I Love you soooooo much! You are the best!!"
 # Sometimes your friends want to express their feelings in a message, and sometimes a key with a letter gets stuck on
 # the keyboard. In both cases we will get a "long-pressed letter" and the letter will then be printed more than once.
@@ -16,26 +17,21 @@
 def long_pressed(text: str, typed: str) -> bool:
     if text == typed:
         return False
-    a = list(map(str, text.split()))
-    print(a)
-    b = list(map(str, typed.split()))
-    print(b)
-    c = 0
-    d = []
-    for i, j in zip(a, b):
-        for k in set(j):
-            if i.count(k) < j.count(k):
-                c += 1
-            else:
-                c += 0
-        d += [True] if len(i) >= c else [False]
-        c = 0
-    return d
+    a = False
+    for i, j in zip(map(str, text.split()), map(str, typed.split())):
+        if set(i) == set(j):
+            for k in set(i):
+                if i.count(k) <= j.count(k):
+                    a = True
+                else:
+                    return False
+        else:
+            return False
+    return a
 
 
-print(long_pressed("alex", "aaleex"))  # True
-print(long_pressed("welcome to checkio", "weeeelcome to cccheckio"))  # True
-print(long_pressed("there is an error here",
-                   "there is an errorrr hereaa"))  # False
-print(long_pressed("hi, my name is...", "hi, my name is..."))  # False
-print(long_pressed('welcome boss!', 'welcooome bos!!'))  # False
+print(long_pressed("alex", "aaleex"))                                        # True
+print(long_pressed("welcome to checkio", "weeeelcome to cccheckio"))         # True
+print(long_pressed("there is an error here", "there is an errorrr hereaa"))  # False
+print(long_pressed("hi, my name is...", "hi, my name is..."))                # False
+print(long_pressed('welcome boss!', 'welcooome bos!!'))                      # False

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 # You are given a string. Your function should return True if the string is a valid number (contains digits only),
 # otherwise - False. Look at the example.
 # Input: A string.

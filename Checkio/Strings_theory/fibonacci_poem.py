@@ -16,7 +16,7 @@
 # Input: A string (str).
 # Output: A string (str).
 def fibo_poem(text: str) -> str:
-    # your code here
+    # 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89,
     return ""
 
 

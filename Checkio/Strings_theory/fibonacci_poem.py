@@ -17,7 +17,19 @@
 # Output: A string (str).
 def fibo_poem(text: str) -> str:
     # 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89,
-    return ""
+    if not text:
+        return text
+    new_text = text[0]
+    a = 1
+    b = 1
+    for i in map(str, text.split()):
+        if (a + b) == text.index(i):
+            new_text += '\n' + i
+        else:
+            new_text += i + ' '
+        a = b
+        b += a
+    return new_text
 
 
 print(fibo_poem(""))  # ""

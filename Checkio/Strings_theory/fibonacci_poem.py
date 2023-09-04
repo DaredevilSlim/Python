@@ -16,34 +16,20 @@
 # Input: A string (str).
 # Output: A string (str).
 def fibo_poem(text: str) -> str:
-    # 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89,
-    if not text:
-        return text
     text = list(map(str, text.split()))
-    l = len(text)
-    if l == 1:
-        return text[0]
-    f = [1, 1]
-    a = 0
-    b = 1
-    c = 2
-    while c < l:
-        d = f[a] + f[b]
-        f.append(d)
-        a += 1
-        b += 1
-        c += d
-    '''n = list([text[0]])
-    e = 0
-    g = f[e]
-    for i in range(1, len(text)):
-        if i == g:
-            n += '\n' + text[i]
-            e += 1
-            g += f[e]
+    a, b = 0, 1
+    d = []
+    new = ''
+    for i in range(len(text)):
+        if len(d) < b:
+            d.append(text[i])
         else:
-            n += ' ' + text[i]'''
-    return x
+            new += ' '.join(d)
+            b, a = a + b, b
+            d = ['\n' + text[i]]
+        if i == len(text) - 1:
+            new += ' '.join(d) + (' _' * (b - len(d)) if len(d) < b else '')
+    return new
 
 
 print(fibo_poem(""))  # ""
@@ -54,3 +40,8 @@ print(
         "There are three kinds of lies: Lies, damned lies, and the benchmarks."
     ))
 )  # "There\nare\nthree kinds\nof lies: Lies,\ndamned lies, and the benchmarks."
+print(fibo_poem('Python'))  # 'Python'
+print(fibo_poem(
+    'How did the programmer die in the shower? He read the shampoo bottle instructions: Lather. Rinse. Repeat.'
+)
+)  # 'How\ndid\nthe programmer\ndie in the\nshower? He read the shampoo\nbottle instructions: Lather. Rinse. Repeat. _ _ _'

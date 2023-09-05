@@ -8,15 +8,10 @@
 # Input: List of integers (int).
 # Output: Integer (int).
 def not_order(data: list[int]) -> int:
-    a = 0
-    for i in range(len(data) - 1):
-        if data[i] > data[i+1]:
-            a += 1
-            data = data[:i] + data[i:] + [data[i]]
-    return 0 if not data else a
+    return 0 if not data else sum(1 for i, j in zip(data, sorted(data)) if i != j)
 
 
 print(not_order([1, 1, 4, 2, 1, 3]))  # 3
-print(not_order([]))  # 0
-print(not_order([1, 1, 1, 1, 1]))  # 0
-print(not_order([1, 2, 3, 4, 5]))  # 0
+print(not_order([]))                  # 0
+print(not_order([1, 1, 1, 1, 1]))     # 0
+print(not_order([1, 2, 3, 4, 5]))     # 0

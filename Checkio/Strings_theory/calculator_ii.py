@@ -19,19 +19,30 @@
 # number/subtracting itself).
 # Input: String.
 # Output: String.
+def separate(a: str) -> list:
+    if not a or a in '+-=':
+        return ['0']
+    for i in '+-=':
+        a = a.replace(i, f' {i} ')
+    return [i if i in '+-=' else str(int(i)) for i in a.split()]
+
+
+def double_sign(a: list, b: str) -> list:
+    return a + (a[-2:] if b == '=' else [b] + [a[-1]])
+
+
 def calculator(log: str) -> str:
-    if not log or log in '+-=':
-        return '0'
-    if log.isdigit():
-        return str(int(log))
-    return ''
+    log = separate(log)
+    if log[-1].isdigit() and ('=' not in log or log[-2] == '='):
+        return log[-1]
+    if log[-1] in '+=-':
+        if log[-2] in '+=-':
+            log = double_sign(log[:-2], log[-2])
+        else:
+            log = log[:-1]
+    return eval(''.join(log))
 
 
-print(calculator("3+="))  # "6"
-print(calculator("3+2=="))  # "7"
-print(calculator("4-1=="))  # "2"
-print(calculator("3+-2="))  # "1"
-print(calculator("-=-+3-++--+-2=-"))  # "1"
 print(calculator("000000"))  # "0"
 print(calculator("0000123"))  # "123"
 print(calculator("12"))  # "12"
@@ -43,3 +54,8 @@ print(calculator("1+2="))  # "3"
 print(calculator("1+2-"))  # "3"
 print(calculator("1+2=2"))  # "2"
 print(calculator("=5=10=15"))  # "15"
+print(calculator("3+-2="))  # "1"
+print(calculator("3+="))  # "6"
+print(calculator("3+2=="))  # "7"
+print(calculator("4-1=="))  # "2"
+# print(calculator("-=-+3-++--+-2=-"))  # "1"

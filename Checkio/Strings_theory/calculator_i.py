@@ -19,19 +19,21 @@
 # useful.
 # Precondition: Allowed characters: digits (0-9), single signs plus (+), minus (-) or equation (=) between digit blocks.
 # NO combinations of signs (+=, +- etc.).
-def calculator(log: str) -> str:
-    if not log or log in '+-=':
-        return '0'
-    if log.isdigit():
-        return str(int(log))
+def separate(a: str) -> list:
+    if not a or a in '+-=':
+        return ['0']
     for i in '+-=':
-        log = log.replace(i, ' ' + i + ' ')
-    log = ''.join(str(int(i)) if i not in '+-=' else i for i in log.split())
+        a = a.replace(i, f' {i} ')
+    return [i if i in '+-=' else str(int(i)) for i in a.split()]
+
+
+def calculator(log: str) -> str:
+    log = separate(log)
+    if log[-1].isdigit() and ('=' not in log or log[-2] == '='):
+        return log[-1]
     if log[-1] in '+=-':
-        return str(eval(log[:-1]))
-    for i in '=+-':
-        if i in log:
-            return log.split(i)[-1]
+        log = log[:-1]
+    return str(eval(''.join(log)))
 
 
 print(calculator('000000'))  # "0"

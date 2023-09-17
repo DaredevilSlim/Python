@@ -19,21 +19,53 @@
 # useful.
 # Precondition: Allowed characters: digits (0-9), single signs plus (+), minus (-) or equation (=) between digit blocks.
 # NO combinations of signs (+=, +- etc.).
-def separate(a: str) -> list:
-    if not a or a in '+-=':
-        return ['0']
-    for i in '+-=':
-        a = a.replace(i, f' {i} ')
-    return [i if i in '+-=' else str(int(i)) for i in a.split()]
+def eval_string(a: list) -> str:
+    if a[-1] == '==':
+        a = a[:-1] + a[-3:-1]
+    elif a[-1].isdigit():
+        a = a[-1]
+    elif a[-1] == '+=' or a[-1] == '-=':
+        b = str(eval(''.join(a[:-1])))
+        a = [b] + [a[-1][0]] + [b]
+    elif a[-1] in ['+', '-', '=', '=+', '=-']:
+        a = a[:-1]
+    elif len(a) == 2:
+        a = a[1] if a[1].isdigit() else a[0]
+    return str(eval(''.join(a)))
+
+
+def change_string(a: str) -> list:
+    b = list()
+    d = ''
+    for i in range(len(a)):
+        if not d:
+            if a[i] != '0':
+                d += a[i]
+        elif d.isdigit():
+            if a[i].isdigit():
+                d += a[i]
+            else:
+                b.append(d)
+                d = a[i]
+        else:
+            if a[i].isdigit():
+                b.clear() if d[-1] == '=' else b.append(d[-1])
+                d = a[i] if a[i] != '0' else ''
+            else:
+                d += a[i]
+        if i == len(a) - 1:
+            b.append(d)
+    return b
 
 
 def calculator(log: str) -> str:
-    log = separate(log)
-    if log[-1].isdigit() and ('=' not in log or log[-2] == '='):
-        return log[-1]
-    if log[-1] in '+=-':
-        log = log[:-1]
-    return str(eval(''.join(log)))
+    if not log or log in '+-=':
+        return '0'
+    if log.isdigit():
+        return str(int(log))
+    log = change_string(log)
+    log = eval_string(log)
+    return log
 
 
 print(calculator('000000'))  # "0"

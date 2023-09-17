@@ -17,13 +17,36 @@
 # "==" means repeating the last operation;
 # "+=" or "-=" - adding/subtracting the number (or operations result) before the combination (doubling the
 # number/subtracting itself).
+# the calculator ignores digit you enter after 5th;
+# "-" for numbers < 0 is NOT taking digit place;
+# if the abs(result) is more than 99999 - "error" is shown as a result.
 # Input: String.
 # Output: String.
 # How it’s used: Calculators are widely used. Understanding the principles of its input and output are interesting and
 # useful.
 # Precondition: Allowed characters: digits (0-9), signs plus (+), minus (-) or equation (=) and their combinations
-# (+=, +-, == etc.).
+# (+=, +-, == etc.). The number may contain no more than 5 digits.
+def len_of_string(a: list) -> str:
+    while len(a) > 1:
+        if len(a) >= 3:
+            if len(a[0]) > 5:
+                a = [a[0][:5]] + a[1:]
+            c = str(eval(''.join(a[0:3])))
+            if len(c) > 5:
+                return 'error'
+            elif len(a) > 3:
+                a = [c] + [a[3:]]
+            else:
+                a = [c]
+        else:
+            return str(eval(''.join(a)))
+
+
 def eval_string(a: list) -> str:
+    d = 0
+    for i in a:
+        if len(i) >= 5:
+            d += 1
     if a[-1] == '==':
         a = a[:-1] + a[-3:-1]
     elif a[-1].isdigit():
@@ -35,7 +58,7 @@ def eval_string(a: list) -> str:
         a = a[:-1]
     elif len(a) == 2:
         a = a[1] if a[1].isdigit() else a[0]
-    return str(eval(''.join(a)))
+    return len_of_string(a) if d > 0 else str(eval(''.join(a)))
 
 
 def change_string(a: str) -> list:
@@ -66,13 +89,20 @@ def calculator(log: str) -> str:
     if not log or log in '+-=':
         return '0'
     if log.isdigit():
-        return str(int(log))
+        return str(int(log))[0:5] if len(log) > 5 else str(int(log))
     log = change_string(log)
     log = eval_string(log)
     return log
 
 
-print(calculator("000000"))  # "0"
+print(calculator("90000+10000="))  # "error"
+print(calculator("90000+10000-10000="))  # "error"
+print(calculator("90000+10000-10000"))  # "10000"
+print(calculator("123456789"))  # "12345"
+print(calculator("123456789+5="))  # "12350"
+print(calculator("5+123456789"))  # "12345"
+print(calculator("50000+="))  # "error"
+'''print(calculator("000000"))  # "0"
 print(calculator("0000123"))  # "123"
 print(calculator("12"))  # "12"
 print(calculator("+12"))  # "12"
@@ -92,4 +122,4 @@ print(calculator("-=-+3-++--+-2=-"))  # "1"
 print(calculator('3+2-='))  # '0'
 print(calculator('+-=12='))  # '12'
 print(calculator('2+3=7+7='))  # '14'
-print(calculator('000005+003'))  # '3'
+print(calculator('000005+003'))  # '3'''''

@@ -19,11 +19,28 @@
 # useful.
 # Precondition: Allowed characters: digits (0-9), single signs plus (+), minus (-) or equation (=) between digit blocks.
 # NO combinations of signs (+=, +- etc.).
-def eval_string(a: list) -> str:
-    if a[-1] == '==':
+def len_of_string(a: list) -> str:
+    while len(a) > 1:
+        if len(a[0]) >= 5:
+            a = [a[0][:5]] + a[1:]
+        a = [str(eval(''.join(a[:3])))] + a[3:]
+        if len(a[0]) > 5:
+            return 'error'
+    return 'error' if len(a[0]) > 5 else a[0]
+
+
+def check_len_elements(a: list) -> list:
+    return len_of_string(a) if sum(1 for i in a if len(i) >= 5) > 0 and ('+' in a or '-' in a) else a
+
+
+def eval_string(a: list) -> list:
+    if a[-1].count('=') > 2:
+        while len(a[-1]) > 0:
+            a = eval_string(a[:-1] + [a[-1][:2]]) + [a[-1][2:]]
+    elif a[-1] == '==':
         a = a[:-1] + a[-3:-1]
     elif a[-1].isdigit():
-        a = a[-1]
+        a = a[-1][:5]
     elif a[-1] == '+=' or a[-1] == '-=':
         b = str(eval(''.join(a[:-1])))
         a = [b] + [a[-1][0]] + [b]
@@ -31,7 +48,7 @@ def eval_string(a: list) -> str:
         a = a[:-1]
     elif len(a) == 2:
         a = a[1] if a[1].isdigit() else a[0]
-    return str(eval(''.join(a)))
+    return a
 
 
 def change_string(a: str) -> list:
@@ -62,10 +79,11 @@ def calculator(log: str) -> str:
     if not log or log in '+-=':
         return '0'
     if log.isdigit():
-        return str(int(log))
+        return str(int(log))[0:5] if len(log) > 5 else str(int(log))
     log = change_string(log)
     log = eval_string(log)
-    return log
+    log = check_len_elements(log)
+    return log if log == 'error' else str(eval(''.join(log)))
 
 
 print(calculator('000000'))  # "0"

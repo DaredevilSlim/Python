@@ -28,29 +28,26 @@
 # (+=, +-, == etc.). The number may contain no more than 5 digits.
 def len_of_string(a: list) -> str:
     while len(a) > 1:
-        if len(a) >= 3:
-            if len(a[0]) > 5:
-                a = [a[0][:5]] + a[1:]
-            c = str(eval(''.join(a[0:3])))
-            if len(c) > 5:
-                return 'error'
-            elif len(a) > 3:
-                a = [c] + [a[3:]]
-            else:
-                a = [c]
-        else:
-            return str(eval(''.join(a)))
+        if len(a[0]) >= 5:
+            a = [a[0][:5]] + a[1:]
+        a = [str(eval(''.join(a[:3])))] + a[3:]
+        if len(a[0]) > 5:
+            return 'error'
+    return 'error' if len(a[0]) > 5 else a[0]
 
 
-def eval_string(a: list) -> str:
-    d = 0
-    for i in a:
-        if len(i) >= 5:
-            d += 1
-    if a[-1] == '==':
+def check_len_elements(a: list) -> list:
+    return len_of_string(a) if sum(1 for i in a if len(i) >= 5) > 0 and ('+' in a or '-' in a) else a
+
+
+def eval_string(a: list) -> list:
+    if a[-1].count('=') > 2:
+        while len(a[-1]) > 0:
+            a = eval_string(a[:-1] + [a[-1][:2]]) + [a[-1][2:]]
+    elif a[-1] == '==':
         a = a[:-1] + a[-3:-1]
     elif a[-1].isdigit():
-        a = a[-1]
+        a = a[-1][:5]
     elif a[-1] == '+=' or a[-1] == '-=':
         b = str(eval(''.join(a[:-1])))
         a = [b] + [a[-1][0]] + [b]
@@ -58,7 +55,7 @@ def eval_string(a: list) -> str:
         a = a[:-1]
     elif len(a) == 2:
         a = a[1] if a[1].isdigit() else a[0]
-    return len_of_string(a) if d > 0 else str(eval(''.join(a)))
+    return a
 
 
 def change_string(a: str) -> list:
@@ -92,17 +89,11 @@ def calculator(log: str) -> str:
         return str(int(log))[0:5] if len(log) > 5 else str(int(log))
     log = change_string(log)
     log = eval_string(log)
-    return log
+    log = check_len_elements(log)
+    return log if log == 'error' else str(eval(''.join(log)))
 
 
-print(calculator("90000+10000="))  # "error"
-print(calculator("90000+10000-10000="))  # "error"
-print(calculator("90000+10000-10000"))  # "10000"
-print(calculator("123456789"))  # "12345"
-print(calculator("123456789+5="))  # "12350"
-print(calculator("5+123456789"))  # "12345"
-print(calculator("50000+="))  # "error"
-'''print(calculator("000000"))  # "0"
+print(calculator("000000"))  # "0"
 print(calculator("0000123"))  # "123"
 print(calculator("12"))  # "12"
 print(calculator("+12"))  # "12"
@@ -122,4 +113,13 @@ print(calculator("-=-+3-++--+-2=-"))  # "1"
 print(calculator('3+2-='))  # '0'
 print(calculator('+-=12='))  # '12'
 print(calculator('2+3=7+7='))  # '14'
-print(calculator('000005+003'))  # '3'''''
+print(calculator('000005+003'))  # '3'
+print(calculator('99999+1'))  # '1'
+print(calculator("90000+10000="))  # "error"
+print(calculator("90000+10000-10000"))  # "10000"
+print(calculator("123456789"))  # "12345"
+print(calculator("123456789+5="))  # "12350"
+print(calculator("5+123456789"))  # "12345"
+print(calculator("50000+="))  # "error"
+print(calculator('50000-===='))  # 'error'
+print(calculator("90000+10000-10000="))  # "error"

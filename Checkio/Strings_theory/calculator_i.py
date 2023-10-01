@@ -19,27 +19,43 @@
 # useful.
 # Precondition: Allowed characters: digits (0-9), single signs plus (+), minus (-) or equation (=) between digit blocks.
 # NO combinations of signs (+=, +- etc.).
-def len_of_string(a: list) -> str:
-    while len(a) > 1:
-        if len(a[0]) >= 5:
-            a = [a[0][:5]] + a[1:]
-        a = [str(eval(''.join(a[:3])))] + a[3:]
-        if len(a[0]) > 5:
-            return 'error'
-    return 'error' if len(a[0]) > 5 else a[0]
+def len_digit(a: list) -> str:
+    if isinstance(a, list):
+        while len(a) > 1:
+            if len(a[0]) > 5:
+                a = [a[0][:5]] + a[1:]
+            a = [str(eval(''.join(a)[:3]))] + a[3:]
+            if len(a[0]) > 5:
+                return 'error'
+    return 'error' if len(a) > 5 else a[0] if isinstance(a, list) else a
 
 
-def check_len_elements(a: list) -> list:
-    return len_of_string(a) if sum(1 for i in a if len(i) >= 5) > 0 and ('+' in a or '-' in a) else a
+def len_float(a: list) -> str:
+    if isinstance(a, list):
+        a = eval(''.join(a))
+        a = str(round(a, 1 if str(a).index('.') >= 4 else 3))
+    return 'error' if a.index('.') > 4 else a[:5] if len(a) > 5 else a
+
+
+def check_len_elements(a: list) -> str:
+    if isinstance(a, str):
+        is_float = '.' in a
+        long = len(a) >= 5
+    else:
+        is_float = sum(1 for i in a if '.' in i) > 0
+        long = sum(1 for i in a if len(i) >= 5) > 0
+    digit_condition = long and not is_float
+    float_condition = long and is_float
+    return len_digit(a) if digit_condition else len_float(a) if float_condition else str(eval(''.join(a)))
 
 
 def eval_string(a: list) -> list:
     if a[-1].count('=') > 2:
         while len(a[-1]) > 0:
-            a = eval_string(a[:-1] + [a[-1][:2]]) + [a[-1][2:]]
+            a = eval_string(a[:-1] + [a[-1][:2]]) + [a[-1][1:]]
     elif a[-1] == '==':
         a = a[:-1] + a[-3:-1]
-    elif a[-1].isdigit():
+    elif a[-1].isdigit() or '.' in a[-1]:
         a = a[-1][:5]
     elif a[-1] == '+=' or a[-1] == '-=':
         b = str(eval(''.join(a[:-1])))
@@ -47,7 +63,7 @@ def eval_string(a: list) -> list:
     elif a[-1] in ['+', '-', '=', '=+', '=-']:
         a = a[:-1]
     elif len(a) == 2:
-        a = a[1] if a[1].isdigit() else a[0]
+        a = a[1] if a[1].isdigit() or '.' in a[1] else a[0]
     return a
 
 
@@ -58,14 +74,14 @@ def change_string(a: str) -> list:
         if not d:
             if a[i] != '0':
                 d += a[i]
-        elif d.isdigit():
-            if a[i].isdigit():
+        elif d.isdigit() or '.' in d:
+            if a[i].isdigit() or a[i] == '.':
                 d += a[i]
             else:
                 b.append(d)
                 d = a[i]
         else:
-            if a[i].isdigit():
+            if a[i].isdigit() or a[i] == '.':
                 b.clear() if d[-1] == '=' else b.append(d[-1])
                 d = a[i] if a[i] != '0' else ''
             else:
@@ -83,7 +99,7 @@ def calculator(log: str) -> str:
     log = change_string(log)
     log = eval_string(log)
     log = check_len_elements(log)
-    return log if log == 'error' else str(eval(''.join(log)))
+    return log
 
 
 print(calculator('000000'))  # "0"

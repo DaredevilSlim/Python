@@ -46,8 +46,9 @@ def len_of_string(a: list) -> str:
     return 'error' if len(a[0]) > 5 else a[0]
 
 
-def check_len_elements(a: list) -> list:
-    return len_of_string(a) if sum(1 for i in a if len(i) >= 5) > 0 and ('+' in a or '-' in a) else a
+def check_len_elements(a: list) -> str:
+    condition = sum(1 for i in a if len(i) >= 5) > 0 and ('+' in a or '-' in a)
+    return len_of_string(a) if condition else str(eval(''.join(a)))
 
 
 def eval_string(a: list) -> list:
@@ -100,7 +101,8 @@ def calculator(log: str) -> str:
     log = change_string(log)
     log = eval_string(log)
     log = check_len_elements(log)
-    return log if log == 'error' else str(eval(''.join(log)))
+    return log
+
 
 
 print(calculator(""))  # "0"

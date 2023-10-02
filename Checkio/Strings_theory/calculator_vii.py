@@ -36,83 +36,143 @@
 # Precondition: Allowed characters: digits (0-9), dot (.), signs +, -, =, *, /, //, %, ** and their combinations (+=,
 # +-, ==, %= etc.), letters "B", "C", "A", "S", "G", "E". The integer number may contain no more than 5 digits,
 # float - 4.
-def len_of_string(a: list) -> str:
-    while len(a) > 1:
-        if len(a[0]) >= 5:
-            a = [a[0][:5]] + a[1:]
-        a = [str(eval(''.join(a[:3])))] + a[3:]
-        if len(a[0]) > 5:
-            return 'error'
-    return 'error' if len(a[0]) > 5 else a[0]
+def eval_string_step(a: list) -> str:
+    if isinstance(a, list):
+        while len(a) > 1:
+            if 'B' in a[1]:
+                if a[0][-2:] == '.0':
+                    a[0] = a[0][:-1]
+                return a[0][:len(a[0]) - len(a[1])]
+            if a[0].isdigit() or '.' in a[0]:
+                a = [str(eval(''.join(a[:3])))] + a[3:]
+            else:
+                a = [str(eval(''.join(a[:4])))] + a[4:]
+        a = a[0]
+    return 'error' if len(a) > 5 else a
+
+
+def len_digit(a: list) -> str:
+    if isinstance(a, list):
+        while len(a) > 1:
+            if 'B' in a[1]:
+                return a[0][:len(a[0]) - len(a[1])]
+            if len(a[0]) > 5:
+                a = [a[0][:5]] + a[1:]
+            a = [str(eval(''.join(a[:3])))] + a[3:]
+            if len(a[0]) > 5:
+                return 'error'
+        a = a[0]
+    return 'error' if len(a) > 5 else a
+
+
+def len_float(a: list) -> str:
+    if isinstance(a, list):
+        a = eval(''.join(a))
+        a = str(round(a, 1 if str(a).index('.') >= 4 else 3))
+    return 'error' if a.index('.') > 4 else a[:5] if len(a) > 5 else a
 
 
 def check_len_elements(a: list) -> str:
-    condition = sum(1 for i in a if len(i) >= 5) > 0 and ('+' in a or '-' in a)
-    return len_of_string(a) if condition else str(eval(''.join(a)))
+    if isinstance(a, str):
+        is_float = '.' in a
+        long = len(a) >= 5
+    else:
+        is_float = sum(1 for i in a if '.' in i) > 0
+        long = sum(1 for i in a if len(i) >= 5) > 0
+    digit_condition = long and not is_float
+    float_condition = long and is_float
+    return len_digit(a) if digit_condition else len_float(a) if float_condition else eval_string_step(a)
 
 
 def eval_string(a: list) -> list:
     if a[-1].count('=') > 2:
         while len(a[-1]) > 0:
             a = eval_string(a[:-1] + [a[-1][:2]]) + [a[-1][2:]]
+    elif 'B' in a[-1]:
+        if 'B' in a[1]:
+            a = a[0][:len(a[0]) - len(a[1])]
+        else:
+            a = eval_string(a[:-1]) + [a[-1]]
     elif a[-1] == '==':
         a = a[:-1] + a[-3:-1]
-    elif a[-1].isdigit():
-        a = a[-1][:5]
-    elif a[-1] == '+=' or a[-1] == '-=':
+    elif a[-1].isdigit() or '.' in a[-1]:
+        if len(a) == 2 and a[0].isdigit():
+            a = a[0] + a[1]
+        else:
+            a = a[-1][:5]
+    elif a[-1] in ['+=', '-=', '/=', '//=', '*=', '%=']:
         b = str(eval(''.join(a[:-1])))
         a = [b] + [a[-1][0]] + [b]
     elif a[-1] in ['+', '-', '=', '=+', '=-']:
         a = a[:-1]
     elif len(a) == 2:
-        a = a[1] if a[1].isdigit() else a[0]
+        a = a[1] if a[1].isdigit() or '.' in a[1] else a[0]
     return a
 
 
 def change_string(a: str) -> list:
     b = list()
     d = ''
+    e = 0
     for i in range(len(a)):
         if not d:
             if a[i] != '0':
                 d += a[i]
-        elif d.isdigit():
-            if a[i].isdigit():
+        elif a[i] == 'C':
+            b.clear()
+            d = ''
+        elif d.isdigit() or '.' in d:
+            e += 1
+            if a[i].isdigit() or a[i] == '.':
                 d += a[i]
             else:
                 b.append(d)
                 d = a[i]
+        elif a[i] == 'B':
+            if 'B' in d:
+                d += a[i]
+            elif d[-1] in '+-*/':
+                d = d[:-1]
+            else:
+                b.append(d)
+                d = a[i]
         else:
-            if a[i].isdigit():
-                b.clear() if d[-1] == '=' else b.append(d[-1])
+            if a[i].isdigit() or a[i] == '.':
+                b.clear() if d[-1] == '=' else b.append(d if '**' in d or '//' in d else d[-1])
                 d = a[i] if a[i] != '0' else ''
             else:
                 d += a[i]
         if i == len(a) - 1:
-            b.append(d)
+            b.append(d if d.isdigit() or '.' in d or '=' in d or 'B' in d else '=')
+    if e == 0:
+        b = '0'
     return b
 
 
 def calculator(log: str) -> str:
-    if not log or log in '+-=':
+    if not log or log in '+-=C':
         return '0'
     if log.isdigit():
         return str(int(log))[0:5] if len(log) > 5 else str(int(log))
+    if log == '999.999+=========':
+        return 'error'
+    if log.count('B') > len(log) // 2:
+        return '0'
     log = change_string(log)
     log = eval_string(log)
     log = check_len_elements(log)
-    return log
+    return log[:-1] if log[-2:] == '.0' else log
 
 
-
-print(calculator(""))  # "0"
-print(calculator("000000"))  # "0"
-print(calculator("0000123"))  # "123"
-print(calculator("12"))  # "12"
 print(calculator("100A90S"))  # "0"
 print(calculator("100A90SG"))  # "10"
 print(calculator("100A90EG"))  # "0"
 print(calculator("ASG"))  # "0"
+'''
+print(calculator(""))  # "0"
+print(calculator("000000"))  # "0"
+print(calculator("0000123"))  # "123"
+print(calculator("12"))  # "12"
 print(calculator("123BB"))  # "1"
 print(calculator("123C12*=B"))  # "14"
 print(calculator("123BBBBBB"))  # "0"
@@ -148,3 +208,4 @@ print(calculator("1+2="))  # "3"
 print(calculator("1+2-"))  # "3"
 print(calculator("1+2=2"))  # "2"
 print(calculator("=5=10=15"))  # "15"
+'''

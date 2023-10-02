@@ -37,6 +37,10 @@
 def eval_string_step(a: list) -> str:
     if isinstance(a, list):
         while len(a) > 1:
+            if 'B' in a[1]:
+                if a[0][-2:] == '.0':
+                    a[0] = a[0][:-1]
+                return a[0][:len(a[0]) - len(a[1])]
             if a[0].isdigit() or '.' in a[0]:
                 a = [str(eval(''.join(a[:3])))] + a[3:]
             else:
@@ -48,6 +52,8 @@ def eval_string_step(a: list) -> str:
 def len_digit(a: list) -> str:
     if isinstance(a, list):
         while len(a) > 1:
+            if 'B' in a[1]:
+                return a[0][:len(a[0]) - len(a[1])]
             if len(a[0]) > 5:
                 a = [a[0][:5]] + a[1:]
             a = [str(eval(''.join(a[:3])))] + a[3:]
@@ -73,7 +79,6 @@ def check_len_elements(a: list) -> str:
         long = sum(1 for i in a if len(i) >= 5) > 0
     digit_condition = long and not is_float
     float_condition = long and is_float
-    # return len_digit(a) if digit_condition else len_float(a) if float_condition else str(eval(''.join(a)))
     return len_digit(a) if digit_condition else len_float(a) if float_condition else eval_string_step(a)
 
 
@@ -81,10 +86,18 @@ def eval_string(a: list) -> list:
     if a[-1].count('=') > 2:
         while len(a[-1]) > 0:
             a = eval_string(a[:-1] + [a[-1][:2]]) + [a[-1][2:]]
+    elif 'B' in a[-1]:
+        if 'B' in a[1]:
+            a = a[0][:len(a[0]) - len(a[1])]
+        else:
+            a = eval_string(a[:-1]) + [a[-1]]
     elif a[-1] == '==':
         a = a[:-1] + a[-3:-1]
     elif a[-1].isdigit() or '.' in a[-1]:
-        a = a[-1][:5]
+        if len(a) == 2 and a[0].isdigit():
+            a = a[0] + a[1]
+        else:
+            a = a[-1][:5]
     elif a[-1] in ['+=', '-=', '/=', '//=', '*=', '%=']:
         b = str(eval(''.join(a[:-1])))
         a = [b] + [a[-1][0]] + [b]
@@ -98,13 +111,26 @@ def eval_string(a: list) -> list:
 def change_string(a: str) -> list:
     b = list()
     d = ''
+    e = 0
     for i in range(len(a)):
         if not d:
             if a[i] != '0':
                 d += a[i]
+        elif a[i] == 'C':
+            b.clear()
+            d = ''
         elif d.isdigit() or '.' in d:
+            e += 1
             if a[i].isdigit() or a[i] == '.':
                 d += a[i]
+            else:
+                b.append(d)
+                d = a[i]
+        elif a[i] == 'B':
+            if 'B' in d:
+                d += a[i]
+            elif d[-1] in '+-*/':
+                d = d[:-1]
             else:
                 b.append(d)
                 d = a[i]
@@ -115,17 +141,21 @@ def change_string(a: str) -> list:
             else:
                 d += a[i]
         if i == len(a) - 1:
-            b.append(d if d.isdigit() or '.' in d or '=' in d else '=')
+            b.append(d if d.isdigit() or '.' in d or '=' in d or 'B' in d else '=')
+    if e == 0:
+        b = '0'
     return b
 
 
 def calculator(log: str) -> str:
-    if not log or log in '+-=':
+    if not log or log in '+-=C':
         return '0'
     if log.isdigit():
         return str(int(log))[0:5] if len(log) > 5 else str(int(log))
     if log == '999.999+=========':
         return 'error'
+    if log.count('B') > len(log) // 2:
+        return '0'
     log = change_string(log)
     log = eval_string(log)
     log = check_len_elements(log)

@@ -14,7 +14,9 @@
 # the main string can have any length, including zero: 0 <= length(mainStr) <= N;
 # the substring should not be an empty string: length(subStr) > 0.
 def count_occurrences(main_str: str, sub_str: str) -> int:
-    return main_str.lower().count(sub_str.lower())
+    m = main_str.lower()
+    s = sub_str.lower()
+    return sum(1 for i in range(len(m) - len(s) + 1) if m[i:i+len(s)] == s)
 
 
 print(count_occurrences("hello world hello", "hello"))  # 2

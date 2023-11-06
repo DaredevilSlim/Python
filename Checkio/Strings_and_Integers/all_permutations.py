@@ -12,46 +12,53 @@ from collections.abc import Iterable
 # data analysis in genetics for possible gene combinations.
 
 
-def count_permutation(s: str) -> int:
-    a = 1
-    for i in range(len(s), 1, -1):
-        a *= i
-    return a
-
-
 def string_permutations(s: str) -> Iterable[str]:
-    count = count_permutation(s)
-    print(count)
+    sl = len(s)
+    count = 1
+    for i in range(sl, 1, -1):
+        count *= i
+    ls = [''] * count
+    # for i in s:
+    #    ls += [f'{i}'] * (count // sl)
+    # print(count, ls)
+    a = 0
+    for i in range(count):
+        for j in range(sl):
+            for k in range(count // sl):
+                if s[i][j] != s[k]:
+                    ls[i] += s[k]
+    print(ls)
     return []
 
 
-print(list(string_permutations("ab")))  # ["ab", "ba"]
-print(list(string_permutations("abc")))  # ["abc", "acb", "bac", "bca", "cab", "cba"]
-print(list(string_permutations("a")))  # ["a"]
-print(list(string_permutations("abcd")))  #
-'''[
-    "abcd",
-    "abdc",
-    "acbd",
-    "acdb",
-    "adbc",
-    "adcb",
-    "bacd",
-    "badc",
-    "bcad",
-    "bcda",
-    "bdac",
-    "bdca",
-    "cabd",
-    "cadb",
-    "cbad",
-    "cbda",
-    "cdab",
-    "cdba",
-    "dabc",
-    "dacb",
-    "dbac",
-    "dbca",
-    "dcab",
-    "dcba",
+print(list(string_permutations('ab')))  # ['ab', 'ba']
+'''
+print(list(string_permutations('abc')))  # ['abc', 'acb', 'bac', 'bca', 'cab', 'cba']
+print(list(string_permutations('a')))  # ['a']
+print(list(string_permutations('abcd')))  #
+[
+    'abcd',
+    'abdc',
+    'acbd',
+    'acdb',
+    'adbc',
+    'adcb',
+    'bacd',
+    'badc',
+    'bcad',
+    'bcda',
+    'bdac',
+    'bdca',
+    'cabd',
+    'cadb',
+    'cbad',
+    'cbda',
+    'cdab',
+    'cdba',
+    'dabc',
+    'dacb',
+    'dbac',
+    'dbca',
+    'dcab',
+    'dcba',
 ]'''

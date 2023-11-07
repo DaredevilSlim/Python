@@ -20,4 +20,3 @@ print(find_remainder(10, 5))  # 0
 print(find_remainder(10, 1))  # 0
 print(find_remainder(5, 7))  # 5
 print(find_remainder(7, 5))  # 2
-

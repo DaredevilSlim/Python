@@ -18,16 +18,8 @@ def string_permutations(s: str) -> Iterable[str]:
     for i in range(sl, 1, -1):
         count *= i
     ls = [''] * count
-    # for i in s:
-    #    ls += [f'{i}'] * (count // sl)
-    # print(count, ls)
-    a = 0
-    for i in range(count):
-        for j in range(sl):
-            for k in range(count // sl):
-                if s[i][j] != s[k]:
-                    ls[i] += s[k]
-    print(ls)
+    for i in range(len(s)):
+        pass
     return []
 
 

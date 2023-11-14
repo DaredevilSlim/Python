@@ -11,8 +11,7 @@
 # Precondition:
 # 1 <= n <= 108
 def is_perfect(n: int) -> bool:
-    # your code here
-    return False
+    return True if sum(n // i for i in range(n, 1, -1) if n % i == 0) == n else False
 
 
 print(is_perfect(6))  # True

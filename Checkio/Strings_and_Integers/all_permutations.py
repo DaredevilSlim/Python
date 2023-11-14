@@ -21,20 +21,25 @@ def string_permutations(s: str) -> Iterable[str]:
     for i in range(len(s)):
         # a = count // i
         #print('before first', s)
-        for j in range(count):
-            #print('before', s)
-            if s not in ls:
-                ls.append(s)
-            s = s[1:][::-1] + s[0]
-            #print('after', s)
-        s = s[-1] + s[:-1]
+        a = s
+        for j in range(count, 1, -1):
+            #print('before', a)
+            if a not in ls:
+                ls.append(a)
+            if count % j == 0:
+                a = a[:2] + a[2:][::-1]
+            else:
+                a = a[1:] + a[0]
+            print('after', a)
+        s = s[-1] + s[:-1][::-1]
         #print('after first', s)
-    return ls
+    return sorted(ls)
 
-
+'''
 print(list(string_permutations('abc')))  # ['abc', 'acb', 'bac', 'bca', 'cab', 'cba']
+
 print(list(string_permutations('ab')))  # ['ab', 'ba']
-print(list(string_permutations('a')))  # ['a']
+print(list(string_permutations('a')))  # ['a']'''
 print(list(string_permutations('abcd')))  #
 '''[
     'abcd',

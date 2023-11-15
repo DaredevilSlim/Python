@@ -15,20 +15,33 @@ from collections.abc import Iterable
 def string_permutations(s: str) -> Iterable[str]:
     sl = len(s)
     count = 1
-    for i in range(sl, 1, -1):
+    for i in range(sl, 0, -1):
         count *= i
-    ls = [''] * count
+    ls = []
     for i in range(len(s)):
-        pass
-    return []
+        # a = count // i
+        #print('before first', s)
+        a = s
+        for j in range(count, 1, -1):
+            #print('before', a)
+            if a not in ls:
+                ls.append(a)
+            if count % j == 0:
+                a = a[:2] + a[2:][::-1]
+            else:
+                a = a[1:] + a[0]
+            print('after', a)
+        s = s[-1] + s[:-1][::-1]
+        #print('after first', s)
+    return sorted(ls)
 
-
-print(list(string_permutations('ab')))  # ['ab', 'ba']
 '''
 print(list(string_permutations('abc')))  # ['abc', 'acb', 'bac', 'bca', 'cab', 'cba']
-print(list(string_permutations('a')))  # ['a']
+
+print(list(string_permutations('ab')))  # ['ab', 'ba']
+print(list(string_permutations('a')))  # ['a']'''
 print(list(string_permutations('abcd')))  #
-[
+'''[
     'abcd',
     'abdc',
     'acbd',

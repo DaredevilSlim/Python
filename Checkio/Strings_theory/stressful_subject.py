@@ -12,9 +12,16 @@
 # Предварительное условие:
 # Тема может содержать до 100 букв.
 def is_stressful(subj: str) -> bool:
-    """
-    recognize stressful subject
-    """
+    if subj and ('!!!' == subj[-3:] or subj.isupper()):
+        return True
+    s = 'i'
+    for i in subj:
+        i = i.lower()
+        if i.isalpha() and i != s[-1]:
+            s += i
+    for i in ('help', 'asap', 'urgent'):
+        if i in s:
+            return True
     return False
 
 

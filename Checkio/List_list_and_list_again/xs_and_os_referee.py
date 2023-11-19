@@ -18,17 +18,14 @@
 # all(len(row) == 3 for row in game_result).
 def checkio(game_result: list[str]) -> str:
     a, b, c = game_result
-    n = game_result
-    d = 0
-    g = ''
-    h = ''
+    d, e, f = 0, '', ''
+    g = game_result
     for i, j, k in zip(a, b, c):
-        n.append(f'{i + j + k}')
-        g, h = (g+i, h+k) if d == 0 else (g+j, h+j) if d == 1 else (g+k, h+i)
+        g.append(f'{i + j + k}')
+        e, f = (e+i, f+k) if d == 0 else (e+j, f+j) if d == 1 else (e+k, f+i)
         d += 1
-    n.append(g)
-    n.append(h)
-    return 'X' if 'XXX' in n else 'O' if 'OOO' in n else 'D'
+    g += [e] + [f]
+    return 'X' if 'XXX' in g else 'O' if 'OOO' in g else 'D'
 
 
 print(checkio(["X.O", "XX.", "XOO"]))  # "X"

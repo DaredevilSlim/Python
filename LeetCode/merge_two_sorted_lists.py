@@ -19,18 +19,24 @@
 # -100 <= Node.val <= 100
 # Both list1 and list2 are sorted in non-decreasing order.
 class ListNode:
-     def __init__(self, val=0, next=None):
-         self.val = val
-         self.next = next
+    def __init__(self, val=None, next=None):
+        self.val = val
+        self.next = next
 
+    def __str__(self):
+        return f'[{self.val}]->[{self.next}]'
 
+result
 def merge_two_lists(list1: ListNode, list2: ListNode) -> ListNode:
-
-    #while list_node1 is not None and list_node2 is not None:
+    # while list_node1 is not None and list_node2 is not None:
     #    if list_node1 == list_node2:
-    next_list2 = list2.next
-    print(list2)
-    return ListNode[next_list2]
+    result = ListNode()
+    if result.next is None:
+        result.next = list1[0]
+    print(result)
+
+
+    pass
 
 
 print(merge_two_lists([1,2,4], [1,3,4]))  # [1, 1, 2, 3, 4, 4]

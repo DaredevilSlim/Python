@@ -26,7 +26,7 @@ class ListNode:
     def __str__(self):
         return f'[{self.val}]->[{self.next}]'
 
-result
+
 def merge_two_lists(list1: ListNode, list2: ListNode) -> ListNode:
     # while list_node1 is not None and list_node2 is not None:
     #    if list_node1 == list_node2:

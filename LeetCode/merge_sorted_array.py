@@ -31,18 +31,27 @@
 # 1 <= m + n <= 200
 # -109 <= nums1[i], nums2[j] <= 109
 def merge(nums1: list[int], m: int, nums2: list[int], n: int) -> None:
-    print('original', id(nums1))
-    print('before', id(nums1))
-    for i in range(len(nums2[:n])):
-        for j in range(len(nums1[:m])):
-            if nums2[i] < nums1[j]:
-                nums1.insert(nums2[i], j)
-        if not nums1 or nums2[i] > nums1[-1]:
-            nums1 = nums1 + [nums2[i]]
-    print('after', id(nums1))
-    return nums1
+    nums2 = nums2[:n]
+    a = 0
+    b = 0
+    while a < n:
+        if nums2[a] <= nums1[b]:
+            nums1.pop()
+            nums1.insert(b, nums2[a])
+            a += 1
+            m += 1
+        elif b >= m and nums2[a] > nums1[b]:
+            nums1.pop()
+            nums1.insert(b, nums2[a])
+            a += 1
+        b += 1
+    # return nums1
 
 
-print(merge([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3))  # [1,2,2,3,5,6]
+print(merge([-1, -1, 0, 0, 0, 0], 4, [-1, 0], 2))  # [-1, -1, -1, 0]
+print(merge([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3))  # [1, 2, 2, 3, 5, 6]
+print(merge([4, 5, 6, 0, 0, 0], 3, [1, 2, 3], 3))  # [1, 2, 3, 4, 5, 6]
 print(merge([1], 1, [], 0))  # [1]
 print(merge([0], 0, [1], 1))  # [1]
+print(merge([1, 0], 1, [2], 1))  # [1, 2]
+print(merge([1, 2, 3, 0, 0, 0], 3, [4, 5, 6], 3))  # [1, 2, 3, 4, 5, 6]

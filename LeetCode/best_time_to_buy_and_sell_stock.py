@@ -18,18 +18,17 @@
 # 1 <= prices.length <= 105
 # 0 <= prices[i] <= 104
 def max_profit(prices: list[int]) -> int:
-    a = 0
+    a = prices[0]
     b = 0
-    for i in range(prices.index(min(prices)), len(prices)-1):
-        for j in range(i+1, len(prices)):
-            if prices[j] - prices[i]
-            print(f'{prices[j]} - {prices[i]} = {prices[j] - prices[i]}')
-            if prices[j] - prices[i] > a:
-                a = prices[j] - prices[i]
-                b = j + 1
+    for i in range(1, len(prices)):
+        if prices[i] - a > b:
+            b = prices[i] - a
+        if prices[i] < a:
+            a = prices[i]
     return b
 
 
 print(max_profit([7, 1, 5, 3, 6, 4]))  # 5
 print(max_profit([7, 6, 4, 3, 1]))  # 0
 print(max_profit([1, 2]))  # 1
+print(max_profit([2, 4, 1]))  # 2

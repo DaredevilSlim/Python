@@ -28,18 +28,21 @@ def convert_to_title(column_number: int) -> str:
          20: 'T', 21: 'U', 22: 'V', 23: 'W', 24: 'X', 25: 'Y', 26: 'Z'}
     s = ''
     while column_number > 0:
-        if column_number < 27:
-            s += d[column_number]
+        if column_number <= 26:
+            s = d[column_number] + s
             column_number = 0
+        elif column_number % 26 == 0:
+            s = d[26] + s
+            column_number = column_number // 26 - 1
         else:
-            t = column_number // 26
-            s += d[t]
-            column_number = column_number % 26
+            s = d[column_number % 26] + s
+            column_number = column_number // 26
     return s
 
 
 print(convert_to_title(1))  # 'A'
 print(convert_to_title(28))  # 'AB'
+print(convert_to_title(52))  # 'AZ'
 print(convert_to_title(701))  # 'ZY'
-print(705 // 26, 705 % 26)
-#print(convert_to_title(2147483647))  # 'ZY'
+print(convert_to_title(728))  # 'AAZ'
+print(convert_to_title(2147483647))  # 'FXSHRXW'

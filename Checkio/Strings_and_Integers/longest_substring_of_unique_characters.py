@@ -10,10 +10,11 @@
 # identifying unique patterns in a sequence.
 def longest_substr(s: str) -> int:
     a = 0
-    for i in range(len(s)):
-        for j in range(len(s)):
-            if len(set(s[i:j+1])) == len(s[i:j+1]) > a:
-                a += 1
+    b = ''
+    for i in s:
+        b = (b[b.index(i) + 1:] if i in b else b) + i
+        if len(b) > a:
+            a = len(b)
     return a
 
 

@@ -20,9 +20,15 @@
 # 0 <= height[i] <= 104
 def max_area(height: list[int]) -> int:
     a = 0
-    for i in range(len(height)-1):
-        for j in range(len(height)-1, i, -1):
-            a = max(a, (min(height[i], height[j]) * (j - i)))
+    b = len(height) - 1
+    c = 0
+    while c != b:
+        if height[c] <= height[b]:
+            a = max(a, height[c] * (b - c))
+            c += 1
+        else:
+            a = max(a, height[b] * (b - c))
+            b -= 1
     return a
 
 

@@ -19,17 +19,17 @@
 # 2 <= n <= 105
 # 0 <= height[i] <= 104
 def max_area(height: list[int]) -> int:
-    a = 0
+    a = []
     b = len(height) - 1
     c = 0
     while c != b:
         if height[c] <= height[b]:
-            a = max(a, height[c] * (b - c))
+            a.append(height[c] * (b - c))
             c += 1
         else:
-            a = max(a, height[b] * (b - c))
+            a.append(height[b] * (b - c))
             b -= 1
-    return a
+    return max(a)
 
 
 print(max_area([1, 8, 6, 2, 5, 4, 8, 3, 7]))  # 49

@@ -22,4 +22,9 @@
 # The input must be a binary string of length 32
 # Follow up: If this function is called many times, how would you optimize it?
 def reverse_bits(n: int) -> int:
-    pass
+    return int(f'{n:032b}'[::-1], 2)  # int('{:032b}'.format(n)[::-1], 2)
+
+
+print(reverse_bits(43261596))  # 964176192
+print(reverse_bits(4294967293))  # 3221225471
+print(reverse_bits(2))  # 2

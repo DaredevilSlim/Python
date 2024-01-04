@@ -32,13 +32,13 @@ def guess(num: int) -> int:
 def guess_number(n: int) -> int:
     a = n
     co = 0
-    while co <= 15 and guess(n) != 0:
+    while co <= 7 and guess(n) != 0:
         print(f'begin n - {n}')
         if guess(n) == 1:
-            a = n
             n = round(n / 2)
             print(f'equal to 1, n - {n}, a - {a}')
         elif guess(n) == -1:
+            a = round(n / 2)
             n = round(n - a / 2) if a > 1 else a
             print(f'equal to -1, n - {n}, a - {a}')
         co += 1

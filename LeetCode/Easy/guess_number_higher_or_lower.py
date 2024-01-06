@@ -22,41 +22,29 @@
 # 1 <= n <= 231 - 1
 # 1 <= pick <= n
 def guess(num: int) -> int:
-    if num > 50:
+    if num > 6:
         return -1
-    if num < 50:
+    if num < 6:
         return 1
     return 0
 
 
 def guess_number(n: int) -> int:
-    co = 0
     minimum = 0
     maximum = n
-    middle = round(maximum / 2)
-    result = 0
+    middle = maximum
     while guess(middle) != 0:
-        #print(f'start: minimum = {minimum}, middle = {middle}, maximum = {maximum}')
-        if guess(middle) == 1:
+        if guess(middle) == 1 and minimum < middle:
             minimum = middle
-            middle = round(minimum + (maximum - minimum / 2))
-            print(f'equal to 1: minimum = {minimum}, middle = {middle}, maximum = {maximum}')
-        elif guess(middle) == -1:
+        elif guess(middle) == -1 and maximum > middle:
             maximum = middle
-            middle = round(maximum - (maximum - maximum / 2))
-            # a = round(n / 2)
-            # n = round(n - a / 2) if a > 1 else a
-            print(f'equal to -1: minimum = {minimum}, middle = {middle}, maximum = {maximum}')
-        #print(f'finish: minimum = {minimum}, middle = {middle}, maximum = {maximum}')
-        co += 1
-        result = guess(middle)
+        middle = minimum + ((maximum - minimum) // 2)
     return middle
 
 
-print(round(5 / 2), round(2 / 2))
-print(guess_number(1000))  # 50
+print(guess_number(10))  # 6
 '''
 print(guess_number(1))  # 1
+print(guess_number(1000))  # 50
 print(guess_number(2))  # 1
-print(guess_number(10))  # 6
 '''

@@ -30,19 +30,33 @@ def guess(num: int) -> int:
 
 
 def guess_number(n: int) -> int:
-    a = n
     co = 0
-    while co <= 7 and guess(n) != 0:
-        print(f'begin n - {n}')
-        if guess(n) == 1:
-            n = round(n / 2)
-            print(f'equal to 1, n - {n}, a - {a}')
-        elif guess(n) == -1:
-            a = round(n / 2)
-            n = round(n - a / 2) if a > 1 else a
-            print(f'equal to -1, n - {n}, a - {a}')
+    minimum = 0
+    maximum = n
+    middle = round(maximum / 2)
+    result = 0
+    while guess(middle) != 0:
+        #print(f'start: minimum = {minimum}, middle = {middle}, maximum = {maximum}')
+        if guess(middle) == 1:
+            minimum = middle
+            middle = round(minimum + (maximum - minimum / 2))
+            print(f'equal to 1: minimum = {minimum}, middle = {middle}, maximum = {maximum}')
+        elif guess(middle) == -1:
+            maximum = middle
+            middle = round(maximum - (maximum - maximum / 2))
+            # a = round(n / 2)
+            # n = round(n - a / 2) if a > 1 else a
+            print(f'equal to -1: minimum = {minimum}, middle = {middle}, maximum = {maximum}')
+        #print(f'finish: minimum = {minimum}, middle = {middle}, maximum = {maximum}')
         co += 1
-    return n
+        result = guess(middle)
+    return middle
 
 
-print(guess_number(1000))
+print(round(5 / 2), round(2 / 2))
+print(guess_number(1000))  # 50
+'''
+print(guess_number(1))  # 1
+print(guess_number(2))  # 1
+print(guess_number(10))  # 6
+'''

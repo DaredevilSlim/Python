@@ -16,9 +16,9 @@ def remove(st: str) -> str:
     return st
 
 
-print(remove('Hi!'))  # Hi
-print(remove('Hi!!!'))  # Hi
-print(remove('!Hi'))  # !Hi
-print(remove('!Hi!'))  # !Hi
-print(remove('Hi! Hi!'))  # Hi! Hi
-print(remove('Hi'))  # Hi
+print(remove('Hi!'))  # 'Hi'
+print(remove('Hi!!!'))  # 'Hi'
+print(remove('!Hi'))  # '!Hi'
+print(remove('!Hi!'))  # '!Hi'
+print(remove('Hi! Hi!'))  # 'Hi! Hi'
+print(remove('Hi'))  # 'Hi'

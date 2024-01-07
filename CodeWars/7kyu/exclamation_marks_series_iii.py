@@ -11,14 +11,12 @@
 # "Hi! Hi!" ---> "Hi Hi!"
 # "Hi"      ---> "Hi"
 def remove(st: str) -> str:
-    while st[-1] == '!':
-        st = st[:-1]
-    return st
+    return st.replace('!', '') + '!'
 
 
-print(remove('Hi!'))  # Hi
-print(remove('Hi!!!'))  # Hi
-print(remove('!Hi'))  # !Hi
-print(remove('!Hi!'))  # !Hi
-print(remove('Hi! Hi!'))  # Hi! Hi
+print(remove('Hi!'))  # 'Hi!'
+print(remove('Hi!!!'))  # 'Hi!!!'
+print(remove('!Hi'))  # 'Hi'
+print(remove('!Hi!'))  # 'Hi!'
+print(remove('Hi! Hi!'))  # 'Hi Hi!'
 print(remove('Hi'))  # Hi

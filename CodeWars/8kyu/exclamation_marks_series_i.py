@@ -15,9 +15,9 @@ def remove(s: str) -> str:
     return s[:-1] if s and s[-1] == '!' else s
 
 
-print(remove('Hi!'))  # Hi
-print(remove('Hi!!!'))  # Hi!!
-print(remove('!Hi'))  # !Hi
-print(remove('!Hi!'))  # !Hi
-print(remove('Hi! Hi!'))  # Hi! Hi
-print(remove('Hi'))  # Hi
+print(remove('Hi!'))  # 'Hi'
+print(remove('Hi!!!'))  # 'Hi!!'
+print(remove('!Hi'))  # '!Hi'
+print(remove('!Hi!'))  # '!Hi'
+print(remove('Hi! Hi!'))  # 'Hi! Hi'
+print(remove('Hi'))  # 'Hi'

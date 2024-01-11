@@ -17,11 +17,14 @@
 # extra space.
 def find_disappeared_numbers(nums: list[int]) -> list[int]:
     list_nums = list()
-    nums = sorted(nums)
-    for i in range(len(nums)):
-        print(f'{i + 1} - {nums[i]} = {i + 1 - nums[i]}')
-        if abs(i + 1 - nums[i]) >= 1:
-            list_nums.append(i+1)
+    nums = sorted(frozenset(nums))
+    print(nums)
+    a = 1
+    while a < len(nums)-1:
+        #print(f'{a} + 1 < {nums[a]} = {a + 1 < nums[a]}')
+        if nums[a+1] - nums[a] != 1:
+            list_nums.append(a+1)
+        a += 1
     return list_nums
 
 

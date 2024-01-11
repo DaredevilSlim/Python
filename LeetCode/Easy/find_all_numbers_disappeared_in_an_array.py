@@ -16,18 +16,10 @@
 # Follow up: Could you do it without extra space and in O(n) runtime? You may assume the returned list does not count as
 # extra space.
 def find_disappeared_numbers(nums: list[int]) -> list[int]:
-    list_nums = list()
-    nums = sorted(frozenset(nums))
-    print(nums)
-    a = 1
-    while a < len(nums)-1:
-        #print(f'{a} + 1 < {nums[a]} = {a + 1 < nums[a]}')
-        if nums[a+1] - nums[a] != 1:
-            list_nums.append(a+1)
-        a += 1
-    return list_nums
+    return list(set([i for i in range(1, len(nums)+1)]).difference(frozenset(nums)))
 
 
-print(find_disappeared_numbers([4, 3, 2, 7, 8, 2, 3, 1]))  # [5,6]
+print(find_disappeared_numbers([4, 3, 2, 7, 8, 2, 3, 1]))  # [5, 6]
 print(find_disappeared_numbers([1, 1]))  # [2]
-print(find_disappeared_numbers([10, 2, 5, 10, 9, 1, 1, 4, 3, 7]))
+print(find_disappeared_numbers([10, 2, 5, 10, 9, 1, 1, 4, 3, 7]))  # [6, 8]
+print(find_disappeared_numbers([2, 2]))  # [1]

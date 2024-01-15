@@ -26,11 +26,15 @@
 # 1 <= timeSeries.length <= 104
 # 0 <= timeSeries[i], duration <= 107
 # timeSeries is sorted in non-decreasing order.
-def find_poisoned_duration(timeSeries: list[int], duration: int) -> int:
-    list_attack = list()
-    for i in timeSeries:
-        list_attack += [i, i + duration - 1]
-    return 0 if duration == 0 else list_attack
+def find_poisoned_duration(time_series: list[int], duration: int) -> int:
+    list_attack = 0
+    a = -1 if time_series[0] == 0 else 0
+    for i in time_series:
+        if a >= i:
+            list_attack += i - 1 - a
+        list_attack += duration
+        a = i + duration - 1
+    return list_attack
 
 
 print(find_poisoned_duration([1, 4], 2))  # 4
@@ -38,3 +42,4 @@ print(find_poisoned_duration([1, 2], 2))  # 3
 print(find_poisoned_duration([1, 2, 3, 4, 5, 6, 7, 8, 9], 0))  # 0
 print(find_poisoned_duration([1, 2, 3, 4, 5, 6, 7, 8, 9], 100000))  # 100008
 print(find_poisoned_duration([1, 3, 5, 7, 9, 11, 13, 15], 3))  # 17
+print(find_poisoned_duration([1, 3, 5, 7, 9, 11, 13, 15], 4))  # 18

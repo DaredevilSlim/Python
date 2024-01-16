@@ -27,19 +27,13 @@
 # All the integers of nums1 also appear in nums2.
 # Follow up: Could you find an O(nums1.length + nums2.length) solution?
 def next_greater_element(nums1: list[int], nums2: list[int]) -> list[int]:
-    a = 0
     list_nums = list()
-    while a < len(nums1):
-        i = nums2.index(nums1[a])
-        if i + 1 > len(nums2) - 1:
-            list_nums.append(-1)
-        else:
-            b = 0
-            nums3 = nums2[i:]
-            while b < len(nums3) and nums1[a] < nums3[b]:
-                b += 1
-            list_nums.append(nums3[b] if b < len(nums3) - 1 else -1)
-        a += 1
+    len_nums2 = len(nums2)
+    for i in nums1:
+        start = nums2.index(i)+1
+        while start < len_nums2 and i > nums2[start]:
+            start += 1
+        list_nums.append(nums2[start] if start < len_nums2 else -1)
     return list_nums
 
 

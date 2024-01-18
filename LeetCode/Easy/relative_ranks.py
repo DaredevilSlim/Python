@@ -25,24 +25,20 @@
 # 0 <= score[i] <= 106
 # All the values in score are unique.
 def find_relative_ranks(score: list[int]) -> list[str]:
-    dict_score = dict()
     for i in range(len(score)):
-        dict_score[score[i]] = i
-    sorted_dict = dict(sorted(dict_score.items()))
-    print(sorted_dict)
+        score[i] = [score[i], i]
+    s = sorted(score, reverse=True)
     place = 4
-    for i in sorted_dict:
-        print('before', i, sorted_dict[i], score, place)
-        if sorted_dict[i] == 0:
-            score[sorted_dict[i]] = 'Gold Medal'
-        elif sorted_dict[i] == 1:
-            score[sorted_dict[i]] = 'Silver Medal'
-        elif sorted_dict[i] == 2:
-            score[sorted_dict[i]] = 'Bronze Medal'
+    for i in range(len(score)):
+        if i == 0:
+            score[s[i][1]] = 'Gold Medal'
+        elif i == 1:
+            score[s[i][1]] = 'Silver Medal'
+        elif i == 2:
+            score[s[i][1]] = 'Bronze Medal'
         else:
-            score[sorted_dict[i]] = place
+            score[s[i][1]] = f'{place}'
             place += 1
-        print('after', i, sorted_dict[i], score, place)
     return score
 
 

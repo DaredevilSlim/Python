@@ -31,8 +31,23 @@
 # All the strings of list2 are unique.
 # There is at least a common string between list1 and list2.
 def find_restaurant(list1: list[str], list2: list[str]) -> list[str]:
-    pass
+    intersection = list(set(list1).intersection(list2))
+    if len(intersection) == 1:
+        return intersection
+    result_dict = dict()
+    for i in intersection:
+        list1_index = list1.index(i)
+        list2_index = list2.index(i)
+        indexes_sum = list1_index + list2_index
+        if indexes_sum not in result_dict:
+            result_dict[indexes_sum] = [i]
+        else:
+            result_dict[indexes_sum] += [i]
+    return result_dict[min(result_dict)]
 
 
 print(find_restaurant(["Shogun", "Tapioca Express", "Burger King", "KFC"],
                       ["Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"]))  # ["Shogun"]
+print(find_restaurant(["Shogun", "Tapioca Express", "Burger King", "KFC"],
+                      ["KFC", "Shogun", "Burger King"]))  # ["Shogun"]
+print(find_restaurant(["happy", "sad", "good"], ["sad", "happy", "good"]))  # ["sad", "happy"]

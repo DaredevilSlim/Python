@@ -19,22 +19,26 @@
 # 0 <= n <= flowerbed.length
 def can_place_flowers(flowerbed: list[int], n: int) -> bool:
     a = 0
-    while a < len(flowerbed):
+    while a < len(flowerbed) - 1:
         if flowerbed[a] == 0 and flowerbed[a+1] == 0:
-            flowerbed[a+1] = 1
+            if 0 <= a < len(flowerbed)-1:
+                flowerbed[a] = 1
+            elif a+1 == len(flowerbed):
+                flowerbed[a+1] = 1
             n -= 1
-        elif sum(flowerbed[a:a+2]) == 1:
-            flowerbed[a+1] = 1
-            n -= 1
-        a += 1
+        elif flowerbed[a] == 1 and flowerbed[a+1] == 0:
+            a += 2
+        else:
+            a += 1
     print(flowerbed)
     return n == 0
 
 
 print(can_place_flowers([1, 0, 0, 0, 1], 1))  # True
-print(can_place_flowers([1, 0, 0, 0, 1], 2))  # False
-print(can_place_flowers([1, 0, 0, 0, 0, 1], 2))  # False
 print(can_place_flowers([0, 0, 1, 0, 1], 1))  # True
-print(can_place_flowers([0, 1, 0, 1, 0], 1))  # False
 print(can_place_flowers([1, 0, 0, 0, 1, 0, 0], 2))  # True
 print(can_place_flowers([0, 0, 1, 0, 0], 2))  # True
+print(can_place_flowers([1, 0, 0, 0, 1], 2))  # False
+print(can_place_flowers([1, 0, 0, 0, 0, 1], 2))  # False
+print(can_place_flowers([0, 1, 0, 1, 0], 1))  # False
+

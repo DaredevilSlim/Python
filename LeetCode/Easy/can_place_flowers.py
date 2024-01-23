@@ -18,20 +18,42 @@
 # There are no two adjacent flowers in flowerbed.
 # 0 <= n <= flowerbed.length
 def can_place_flowers(flowerbed: list[int], n: int) -> bool:
+    flower_zero = flowerbed.count(0) - n
+    flower_one = flowerbed.count(1) + n
+    print(flower_zero, flower_one)
+    if flowerbed[0] == 0:
+        if len(flowerbed) % 2 == 0 and (flower_zero - flower_one) >= 0:
+            return True
+    if flowerbed[0] == 1:
+        if len(flowerbed) % 2 == 0 and (flower_one - flower_zero) >= 0:
+            return True
+    return False
+    '''
+    if flowerbed[0] == 0 and (flowerbed_len - flowers_count) >= 0:
+        return True
+    if flowerbed[0] == 1 and (flowerbed_len - flowers_count) >= 0:
+        return True
+    return False
+'''
+
+
+
+    '''
     a = 0
     while a < len(flowerbed) - 1:
         if flowerbed[a] == 0 and flowerbed[a+1] == 0:
-            if 0 <= a < len(flowerbed)-1:
-                flowerbed[a] = 1
-            elif a+1 == len(flowerbed):
-                flowerbed[a+1] = 1
+            flowerbed[a] = 1
             n -= 1
+        a += 2
+        
         elif flowerbed[a] == 1 and flowerbed[a+1] == 0:
-            a += 2
+            a += 1
+        elif flowerbed[a] == 0 and flowerbed[a + 1] == 1:
+            a += 1
         else:
             a += 1
     print(flowerbed)
-    return n == 0
+    return n == 0'''
 
 
 print(can_place_flowers([1, 0, 0, 0, 1], 1))  # True

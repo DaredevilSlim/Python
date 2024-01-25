@@ -18,24 +18,25 @@
 # There are no two adjacent flowers in flowerbed.
 # 0 <= n <= flowerbed.length
 def can_place_flowers(flowerbed: list[int], n: int) -> bool:
-    if n == 0:
+    if n == 0 or flowerbed == [0] and n == 1:
         return True
-    f = ''.join(map(str, flowerbed))
-    if f == '0' and n == 1:
-        f = '1'
+    if n > 0 and flowerbed[:2] == [0, 0]:
+        flowerbed = [1] + flowerbed[1:]
         n -= 1
-    if n > 0 and f[:2] == '00':
-        f = '10' + f[2:]
+    if n > 0 and flowerbed[-2:] == [0, 0]:
+        flowerbed = flowerbed[:-1] + [1]
         n -= 1
-    if n > 0 and f[-2:] == '00':
-        f = f[:-2] + '01'
-        n -= 1
-    while n > 0 and '000' in f:
-        f = f.replace('000', '010', 1)
-        n -= 1
+    i = 0
+    while n > 0 and i < len(flowerbed) - 3:
+        if flowerbed[i:i+3] == [0, 0, 0]:
+            i += 2
+            n -= 1
+        else:
+            i += 1
     return n == 0
 
 
+print(can_place_flowers([1, 0, 0, 0, 0, 0, 1], 2))  # True
 print(can_place_flowers([0, 0, 0, 0, 1], 2))  # True
 print(can_place_flowers([1], 0))  # True
 print(can_place_flowers([0], 1))  # True
@@ -62,7 +63,6 @@ print(can_place_flowers([0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1
                          0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0,
                          0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0,
                          0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0], 25))  # True
-
 print(can_place_flowers([1, 0, 0, 0, 1], 2))  # False
 print(can_place_flowers([1, 0, 0, 0, 0, 1], 2))  # False
 print(can_place_flowers([0, 1, 0, 1, 0], 1))  # False
@@ -70,3 +70,4 @@ print(can_place_flowers([1, 0, 1, 0, 0, 1, 0], 1))  # False
 print(can_place_flowers([0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0,
                          1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0,
                          0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0], 17))  # False
+print(can_place_flowers([0, 0], 2))  # False

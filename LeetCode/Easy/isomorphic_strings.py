@@ -19,14 +19,13 @@
 # t.length == s.length
 # s and t consist of any valid ascii character.
 def is_isomorphic(s: str, t: str) -> bool:
+    if s == t:
+        return True
     if len(set(s)) != len(set(t)):
         return False
-    c = ''
     for i, j in zip(s, t):
         if s.count(i) != t.count(j):
             return False
-        if i != j:
-            c += i
     return True
 
 

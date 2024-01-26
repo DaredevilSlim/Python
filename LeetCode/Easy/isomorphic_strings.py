@@ -21,9 +21,12 @@
 def is_isomorphic(s: str, t: str) -> bool:
     if len(set(s)) != len(set(t)):
         return False
+    c = ''
     for i, j in zip(s, t):
         if s.count(i) != t.count(j):
             return False
+        if i != j:
+            c += i
     return True
 
 

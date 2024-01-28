@@ -18,14 +18,16 @@
 def find_max_average(nums: list[int], k: int) -> float:
     if len(nums) <= 4:
         return sum(nums) / k
-    nums_list = list()
+    nums_sum = -100000000
     a = 0
     b = k
     while b < len(nums) + 1:
-        nums_list.append(sum(nums[a:b]) / k)
+        c = sum(nums[a:b]) / k
+        if c > nums_sum:
+            nums_sum = c
         a += 1
         b += 1
-    return max(nums_list)
+    return nums_sum
 
 
 print(find_max_average([1, 12, -5, -6, 50, 3], 4))  # 12.75000

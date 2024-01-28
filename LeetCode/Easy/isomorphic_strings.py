@@ -19,22 +19,19 @@
 # t.length == s.length
 # s and t consist of any valid ascii character.
 def is_isomorphic(s: str, t: str) -> bool:
-    if s == t:
-        return True
-    s_list = list(s[0])
-    t_list = list(t[0])
-    s_index = 0
-    t_index = 0
-    for i, j in zip(range(1, len(s)), range(1, len(t))):
-        if s[i] in s[:i]:
-            s_index += s[:i].rindex(s[i])
-        if s[i] != s_list[-1][-1]:
-            s_list.append(s[i])
-        if t[j] in t[:j]:
-            t_index += t[:j].rindex(t[j])
-        if t[j] != t_list[-1][-1]:
-            t_list.append(t[j])
-    return len(s_list) == len(t_list) and s_index == t_index
+    s_dict = dict()
+    t_dict = dict()
+    for i in range(len(s)):
+        if s[i] in s_dict:
+            s_dict[s[i]] += 1 + i
+        else:
+            s_dict[s[i]] = 1 + i
+    for j in range(len(t)):
+        if t[j] in t_dict:
+            t_dict[t[j]] += 1 + j
+        else:
+            t_dict[t[j]] = 1 + j
+    return list(s_dict.values()) == list(t_dict.values())
 
 
 print(is_isomorphic('a', 'a'))  # True

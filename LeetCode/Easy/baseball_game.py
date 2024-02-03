@@ -52,7 +52,17 @@
 # For operation '+', there will always be at least two previous scores on the record.
 # For operations 'C' and 'D', there will always be at least one previous score on the record.
 def cal_points(operations: list[str]) -> int:
-    pass
+    points = list()
+    for i in operations:
+        if i == 'C':
+            points.pop()
+        elif i == 'D':
+            points.append(points[-1] + points[-1])
+        elif i == '+':
+            points.append(points[-2] + points[-1])
+        else:
+            points.append(int(i))
+    return sum(points)
 
 
 print(cal_points(['5', '2', 'C', 'D', '+']))  # 30

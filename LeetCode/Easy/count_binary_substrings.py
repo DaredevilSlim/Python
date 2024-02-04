@@ -19,7 +19,15 @@
 # 1 <= s.length <= 105
 # s[i] is either '0' or '1'.
 def count_binary_substrings(s: str) -> int:
-    pass
+    if len(s) <= 1:
+        return 0
+    s_list = s.replace('01', '0 1').replace('10', '1 0').split()
+    i = 1
+    count = 0
+    while i < len(s_list):
+        count += min(len(s_list[i-1]), len(s_list[i]))
+        i += 1
+    return count
 
 
 print(count_binary_substrings('00110011'))  # 6

@@ -24,14 +24,14 @@
 # letters contains at least two different characters.
 # target is a lowercase English letter.
 def next_greatest_letter(letters: list[str], target: str) -> str:
-    if target < letters[-1]:
-        i = 0
+    i = 0
+    if letters[0] <= target < letters[-1]:
         while target >= letters[i]:
             i += 1
-        return letters[i]
-    return letters[0]
+    return letters[i]
 
 
 print(next_greatest_letter(['c', 'f', 'j'], 'a'))  # 'c'
 print(next_greatest_letter(['c', 'f', 'j'], 'c'))  # 'f'
+print(next_greatest_letter(['c', 'f', 'j'], 'j'))  # 'c'
 print(next_greatest_letter(['x', 'x', 'y', 'y'], 'z'))  # 'x'

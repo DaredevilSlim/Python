@@ -19,14 +19,17 @@
 # Either x is not zero or n > 0.
 # -104 <= xn <= 104
 def my_pow(x: float, n: int) -> float:
-    if n == 0 or x == 1.0:
+    if n == 0 or abs(x) == 1.0:
+        if x < 0:
+            if n < 0:
+                return 1
+            return -1
         return 1
     if abs(n) > 1000000:
         return 0
     pow_x = x
     i = 1
     while i < abs(n):
-        # print(f'in loop pow_x = {pow_x}')
         if 0 < pow_x < 0.000001:
             return 0
         pow_x *= x

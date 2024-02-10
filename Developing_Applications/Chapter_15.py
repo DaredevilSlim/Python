@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from enum import Enum, unique, auto, IntEnum, Flag
+
 # ГЛАВА 15
 print('ГЛАВА 15')
 # Итераторы, контейнеры и перечисления
@@ -72,16 +74,113 @@ print('15.2.2. Контейнеры-отображения')
 
 # 15.3. Перечисления
 print('15.3. Перечисления')
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+# Перечисление - это набор каких-либо именованных значений, называемых элементами. Перечисление можно рассматривать как
+# своего рода словарь, только неизменяемый. Перечисление представляет собой класс, содержащий непосредственные
+# определения атрибутов класса, каждый из которых представляет один из элементов. Имя атрибута класса станет именем
+# соответствующего элемента. Соглашения Python-программирования требуют, чтобы имена элементов перечисления были набраны
+# в верхнем регистре.
+# Соответственно, для доступа к нужному элементу перечисления следует обратиться к представляющему его атрибуту класса
+# посредством привычной точечной нотации.
+# Класс перечисления должен быть производным от одного из следующих четырех классов, определенных в модуле enum:
+# - Enum - базовый класс для создания перечислений, чьи элементы способны хранить значения произвольного типа. Элементы
+# такого перечисления могут содержать одинаковые значения.
+# Пример перечисления, содержащего элементы с названиями различных веб-фреймворков, в том числе два элемента с
+# одинаковыми значениями:
+
+
+class Frameworks(Enum):
+    LARAVEL = "Laravel"
+    DJANGO = "Django"
+    EXPRESS = "Express"
+    RAILS = "Ruby on Rails"
+    RUBY_ON_RAILS = "Ruby on Rails"
+
+
+print(Frameworks.DJANGO)
+print(Frameworks.LARAVEL == Frameworks.RAILS)
+print(Frameworks.RUBY_ON_RAILS == Frameworks.RAILS)
+# Создать перечисление, элементы которого гарантированно .содержат только уникальные значения, можно, указав у его
+# класса декоратор unique из модуля enum:
+# @unique
+# class Frameworks2(Enum):
+#     LARAVEL = "Laravel"
+#     DJANGO = "Django"
+#     EXPRESS = "Express"
+#     RAILS = "Ruby on Rails"
+#     RUBY_ON_RAILS = "Ruby on Rails"
+# Traceback (most recent call last):
+#   File "/media/Samsung/Programming/Python/Scripts/Developing_Applications/Chapter_15.py", line 106, in <module>
+#     @unique
+#      ^^^^^^
+#   File "/usr/src/Python-3.12.2/Lib/enum.py", line 1597, in unique
+#     raise ValueError('duplicate values found in %r: %s' %
+# ValueError: duplicate values found in <enum 'Frameworks2'>: RUBY_ON_RAILS -> RAILS
+
+
+# Пример перечисления с целыми числами:
+class Colors(Enum):
+    RED = 1
+    GREEN = 2
+    BLUE = 3
+    WHITE = RED + GREEN + BLUE
+
+
+print(Colors.RED)
+print(Colors.WHITE)
+# Однако выполнять арифметические операции с элементами такого перечисления нельзя, поскольку их значения не являются
+# целыми числами:
+
+
+# Если конкретные значения элементов целочисленного перечисления не важны, для их занесения можно использовать функцию
+# auto() из модуля enum. Эта функция возвращает последовательно увеличивающиеся целые числа, начиная с 1. Пример:
+class Colors2(Enum):
+    RED = auto()
+    GREEN = auto()
+    BLUE = auto()
+    WHITE = auto()
+
+
+print(Colors2.RED)
+print(Colors2.WHITE)
+
+
+# - IntEnum - базовый класс для создания перечислений, элементы которых хранят лишь целочисленные значения. Значения
+# элементов преобразуются в целые числа и, следовательно, могут быть использованы в арифметических операциях и
+# выражениях сравнения с целыми числами. Пример:
+class Colors3(IntEnum):
+    RED = 1
+    GREEN = 2
+    BLUE = 3
+    WHITE = RED + GREEN + BLUE
+
+
+print(Colors3.GREEN)
+print(Colors3.GREEN + 3)
+print(Colors3.GREEN * Colors3.BLUE)
+print(Colors3.WHITE == 6)
+
+
+# - Flag - базовый класс для перечислений, элементы которых хранят целочисленные значения. Значения элементов могут
+# выступать в качестве операндов для двоичных операторов (описаны в разд. 3.2). Функция auto() при использовании в таком
+# перечислении последовательно выдает значения 1 и числа, являющиеся степенями числа 2 (2, 4, 8, 16 и т. д.). Пример:
+class Colors4(Flag):
+    BLACK = 0
+    RED = auto()
+    GREEN = auto()
+    BLUE = auto()
+    WHITE = RED | GREEN | BLUE
+
+
+print(Colors4.BLACK)
+print(Colors4.RED)
+print(Colors4.GREEN)
+print(Colors4.BLUE)
+print(Colors4.WHITE)
+print(Colors4.RED & Colors4.GREEN)
+print(Colors4.RED | Colors4.GREEN)
+print(bool(Colors4.WHITE & Colors4.BLUE))
+# Однако при манипуляциях с элементами такого перечисления использовать в качестве операндов двоичных операторов целые
+# числа нельзя:
 #
 #
 #

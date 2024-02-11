@@ -19,28 +19,21 @@
 # Either x is not zero or n > 0.
 # -104 <= xn <= 104
 def my_pow(x: float, n: int) -> float:
-    if n == 0 or abs(x) == 1.0:
-        if x < 0:
-            if n < 0:
-                return 1
-            return -1
-        return 1
-    if abs(n) > 1000000:
-        return 0
-    pow_x = x
-    i = 1
-    while i < abs(n):
-        if 0 < pow_x < 0.000001:
+    def recursion(num_x: float, pow_n: int) -> float:
+        if num_x == 0:
             return 0
-        pow_x *= x
-        i += 1
-    return pow_x if n > 0 else 1 / pow_x
+        if pow_n == 0:
+            return 1
+        res = recursion(num_x * num_x, pow_n // 2)
+        return num_x * res if pow_n % 2 else res
+    result = recursion(x, abs(n))
+    return result if n >= 0 else 1 / result
 
 
 print(my_pow(2.00000, 10))  # 1024.00000
-print(my_pow(2.10000, 3))  # 9.26100
 print(my_pow(2.00000, -2))  # 0.25000
+print(my_pow(2.10000, 3))  # 9.26100
 print(my_pow(0.00001, 2147483647))  # 0.00000
 print(my_pow(-0.82541, 12))  # 0.10001
 print(my_pow(1.00000, 2147483647))  # 1.00000
-print(my_pow(2.00000, -2147483647))  # 1.00000
+print(my_pow(2.00000, -2147483647))  # 0.00000

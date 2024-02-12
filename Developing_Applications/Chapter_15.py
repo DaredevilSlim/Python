@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from enum import Enum, unique, auto, IntEnum, Flag
+from enum import Enum, unique, auto, IntEnum, Flag, IntFlag, EnumMeta
 
 # ГЛАВА 15
 print('ГЛАВА 15')
@@ -89,11 +89,11 @@ print('15.3. Перечисления')
 
 
 class Frameworks(Enum):
-    LARAVEL = "Laravel"
-    DJANGO = "Django"
-    EXPRESS = "Express"
-    RAILS = "Ruby on Rails"
-    RUBY_ON_RAILS = "Ruby on Rails"
+    LARAVEL = 'Laravel'
+    DJANGO = 'Django'
+    EXPRESS = 'Express'
+    RAILS = 'Ruby on Rails'
+    RUBY_ON_RAILS = 'Ruby on Rails'
 
 
 print(Frameworks.DJANGO)
@@ -103,16 +103,16 @@ print(Frameworks.RUBY_ON_RAILS == Frameworks.RAILS)
 # класса декоратор unique из модуля enum:
 # @unique
 # class Frameworks2(Enum):
-#     LARAVEL = "Laravel"
-#     DJANGO = "Django"
-#     EXPRESS = "Express"
-#     RAILS = "Ruby on Rails"
-#     RUBY_ON_RAILS = "Ruby on Rails"
+#     LARAVEL = 'Laravel'
+#     DJANGO = 'Django'
+#     EXPRESS = 'Express'
+#     RAILS = 'Ruby on Rails'
+#     RUBY_ON_RAILS = 'Ruby on Rails'
 # Traceback (most recent call last):
-#   File "/media/Samsung/Programming/Python/Scripts/Developing_Applications/Chapter_15.py", line 106, in <module>
+#   File '/media/Samsung/Programming/Python/Scripts/Developing_Applications/Chapter_15.py', line 106, in <module>
 #     @unique
 #      ^^^^^^
-#   File "/usr/src/Python-3.12.2/Lib/enum.py", line 1597, in unique
+#   File '/usr/src/Python-3.12.2/Lib/enum.py', line 1597, in unique
 #     raise ValueError('duplicate values found in %r: %s' %
 # ValueError: duplicate values found in <enum 'Frameworks2'>: RUBY_ON_RAILS -> RAILS
 
@@ -181,269 +181,63 @@ print(Colors4.RED | Colors4.GREEN)
 print(bool(Colors4.WHITE & Colors4.BLUE))
 # Однако при манипуляциях с элементами такого перечисления использовать в качестве операндов двоичных операторов целые
 # числа нельзя:
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# 293
+# print(Colors4.RED | 2)
+# Traceback (most recent call last):
+#   File '/Chapter_15.py', line 184, in <module>
+#     print(Colors4.RED | 2)
+#           ~~~~~~~~~~~~^~~
+# TypeError: unsupported operand type(s) for |: 'Colors4' and 'int'
 
+
+# - IntFlag - аналогичен Flag, только значения элементов преобразуются в целые числа. Следовательно, при манипуляциях с
+# элементами такого перечисления можно использовать в качестве операндов двоичных операторов целочисленные значения.
+# Пример:
+class Colors5(IntFlag):
+    BLACK = 0
+    RED = auto()
+    GREEN = auto()
+    BLUE = auto()
+    WHITE = RED | GREEN | BLUE
+
+
+print(Colors5.RED | 2)
+print(Colors5.WHITE == 7)
+# Все классы перечислений принадлежат типу EnumMeta из модуля enum:
+print(type(Colors))                  # <class 'enum.EnumType'>
+print(isinstance(Colors, EnumMeta))  # True
+# Значения элементов перечислений являются объектами их классов:
+print(type(Colors.RED))                # <enum 'Colors'>
+print(isinstance(Colors.RED, Colors))  # True
+# Действия, которые можно выполнять над элементами перечислений, были описаны ранее. Помимо того, над элементами
+# перечислений можно производить следующие операции:
+# - обращение к элементу в стиле словарей, используя имя элемента в качестве ключа:
+print(Frameworks['EXPRESS'])  # Frameworks.EXPRESS
+# - обращение к элементу по его значению, записывая его в круглых скобках после имени класса перечисления:
+print(Frameworks('Laravel'))  # Frameworks.LARAVEL
+# - получение имени атрибута класса перечисления, соответствующего заданному элементу, и его значения из свойств
+# элементов name и value соответственно:
+print(Frameworks.RAILS.name, Frameworks.RAILS.value)  # RAILS Ruby on Rails
+# - проверка на вхождение или невхождение элемента в перечисление с помощью операторов in и not in соответственно:
+f = Frameworks.DJANGO
+print(f in Frameworks)
+print(f not in Frameworks)
+print(f in Colors)
+# Перечисление можно использовать в качестве итератора (необходимая для этого функциональность определена в базовом
+# классе):
+print(list(Colors))  # [<Colors.RED: 1>, <Colors.GREEN: 2>, <Colors.BLUE: 3>, <Colors.WHITE: 6>]
+for f in Frameworks:
+    print(f.value, end=' | ')
+print()
+# Помимо элементов, классы перечислений могут содержать методы, включая статические. При этом обычные методы всегда
+# вызываются у элемента перечисления (и соответственно первым параметром любому методу передается ссылка на объект,
+# представляющий элемент перечисления, у которого вызывается этот метод), а статические методы - у самого класса
+# перечисления. Для примера рассмотрим код перечисления Frameworks3 test_00131.py.
+# В методе __str__() использована встроенная переменная __class__, хранящая ссылку на объект определения текущего
+# класса. Атрибут __name__ этого объекта содержит имя класса в виде строки.
+# Можно определить класс перечисления, содержащий только методы и не включающий элементы, а потом наследовать от него
+# производный класс, уже содержащий элементы. Производный класс получит от базового класса поддержку всех его методов.
+# Однако попытка создать производный класс на основе базового, содержащего элементы, приведет к ошибке.
+# Перечисления можно использовать как альтернативу словарей везде, где требуется хранить неизменяемый набор именованных
+# значений. Перечисления занимают меньше оперативной памяти, чем словари, и быстрее обрабатываются.
+# В составе стандартной библиотеки Python присутствует модуль struct, позволяющий создавать нечто похожее на
+# перечисления. Однако он не столь удобен в работе, как инструменты, предлагаемые модулем enum.

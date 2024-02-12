@@ -31,11 +31,15 @@
 # words[i] consists of lower case English letters.
 def shortest_completing_word(license_plate: str, words: list[str]) -> str:
     lp = [i.lower() for i in license_plate if i.isalpha()]
-    result = list
+    result = list()
     for i in range(len(words)):
+        result.append([words[i]])
         for j in lp:
-            words[i] = words[i].replace(j, '', 1)
-    return words
+            result[i][0] = result[i][0].replace(j, '', 1)
+        result[i] = [len(words[i]) - len(result[i][0]), len(result[i][0]), words[i], result[i][0]]
+    print(sorted(result, key=lambda elem: (elem[0], -elem[1]))[-1])
+    index = result.index(sorted(result, key=lambda elem: (elem[0], -elem[1]))[-1])
+    return words[index]
 
 
 print(shortest_completing_word('1s3 PSt', ['step', 'steps', 'stripe', 'stepple']))  # 'steps'

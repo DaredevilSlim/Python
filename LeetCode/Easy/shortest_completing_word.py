@@ -27,20 +27,23 @@
 # 1 <= licensePlate.length <= 7
 # licensePlate contains digits, letters (uppercase or lowercase), or space ' '.
 # 1 <= words.length <= 1000
-# 1 <= words[i].length <= 15
-# words[i] consists of lower case English letters.
+# 1 <= word.length <= 15
+# word consists of lower case English letters.
 def shortest_completing_word(license_plate: str, words: list[str]) -> str:
     lp = [i.lower() for i in license_plate if i.isalpha()]
     result = list()
     for i in range(len(words)):
-        result.append([words[i]])
-        for j in lp:
-            result[i][0] = result[i][0].replace(j, '', 1)
-        result[i] = [len(words[i]) - len(result[i][0]), len(result[i][0]), words[i], result[i][0]]
-    print(sorted(result, key=lambda elem: (elem[0], -elem[1]))[-1])
-    index = result.index(sorted(result, key=lambda elem: (elem[0], -elem[1]))[-1])
-    return words[index]
+        if set(words[i]).issuperset(lp):
+            temp = words[i]
+            for j in lp:
+                temp = temp.replace(j, '', 1)
+            len_temp = len(temp)
+            count_replace = len(words[i]) - len_temp
+            result.append([words[i], count_replace, len_temp, i])
+    return sorted(result, key=lambda elem: (elem[1], -elem[2], -elem[3]))[-1][0]
 
 
 print(shortest_completing_word('1s3 PSt', ['step', 'steps', 'stripe', 'stepple']))  # 'steps'
 print(shortest_completing_word('1s3 456', ['looks', 'pest', 'stew', 'show']))  # 'pest'
+print(shortest_completing_word('Ah71752', ['suggest', 'letter', 'of', 'husband', 'easy',
+                                           'education', 'drug', 'prevent', 'writer', 'old']))  # 'husband'

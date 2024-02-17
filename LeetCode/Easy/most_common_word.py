@@ -23,8 +23,21 @@
 # 1 <= banned[i].length <= 10
 # banned[i] consists of only lowercase English letters.
 def most_common_word(paragraph: str, banned: list[str]) -> str:
-    pass
+    for i in ['!', '?', '\'', ';', ',', '.', '  ']:
+        paragraph = paragraph.replace(i, ' ')
+    dict_paragraph = dict()
+    for word in paragraph.lower().split():
+        if word not in banned:
+            if word in dict_paragraph:
+                dict_paragraph[word] += 1
+            else:
+                dict_paragraph[word] = 1
+    if len(dict_paragraph) == 1:
+        return list(dict_paragraph.keys())[0]
+    return max(dict_paragraph, key=dict_paragraph.get)
 
 
 print(most_common_word('Bob hit a ball, the hit BALL flew far after it was hit.', ['hit']))  # ball
 print(most_common_word('a.', ['']))  # ball
+print(most_common_word('a, a, a, a, b,b,b,c, c', ['a']))  # b
+print(most_common_word('Bob. hIt, baLl', ["bob", "hit"]))  # ball

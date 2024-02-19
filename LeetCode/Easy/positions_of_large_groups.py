@@ -25,15 +25,15 @@
 def large_group_positions(s: str) -> list[list[int]]:
     i = 1
     s_list = list()
-    t_list = [0, 0]
+    one = 0
     while i < len(s):
         if s[i-1] == s[i]:
-            t_list[1] = i
+            if i == len(s)-1 and i - one >= 2:
+                s_list.append([one, i])
         else:
-            t_list[1] = i-1
-            if t_list[1] - t_list[0] >= 2:
-                s_list.append(t_list)
-            t_list = [i, i+1]
+            if i-1 - one >= 2:
+                s_list.append([one, i-1])
+            one = i
         i += 1
     return s_list
 
@@ -42,3 +42,4 @@ print(large_group_positions('abbxxxxzzy'))  # [[3, 6]]
 print(large_group_positions('abc'))  # []
 print(large_group_positions('abcdddeeeeaabbbcd'))  # [[3, 5], [6, 9], [12, 14]]
 print(large_group_positions('aaa'))  # [0, 2]
+print(large_group_positions('babaaaabbb'))  # [[3, 6], [7, 9]]

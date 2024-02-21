@@ -22,14 +22,14 @@
 # 1 <= s.length, goal.length <= 2 * 104
 # s and goal consist of lowercase letters.
 def buddy_strings(s: str, goal: str) -> bool:
-    if len(s) != len(goal) or len(s) <= 1:
+    if len(s) != len(goal) or len(s) < 2:
         return False
     if s == s[::-1]:
         return True
     for i in range(len(s) - 1):
-        if s[i] != s[i + 1]:
+        if s[i-1] != s[i]:
             for j in range(i, len(s)):
-                if s[:i] + s[j] + s[i + 1:j] + s[i] + s[j + 1:] == goal:
+                if s[:i] + s[j] + s[i+1:j] + s[i] + s[j+1:] == goal:
                     return True
     return False
 

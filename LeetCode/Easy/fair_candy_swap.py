@@ -24,14 +24,22 @@
 # 1 <= aliceSizes[i], bobSizes[j] <= 105
 # Alice and Bob have a different total number of candies.
 # There will be at least one valid answer for the given input.
-def fair_candy_swap(aliceSizes: list[int], bobSizes: list[int]) -> list[int]:
-    alice = sum(aliceSizes)
-    bob = sum(bobSizes)
-    both = (alice + bob) // 2
-    print(alice, bob, both)
-    return [abs(both - alice), abs(both - bob)]
+def fair_candy_swap(alice_sizes: list[int], bob_sizes: list[int]) -> list[int]:
+    sum_a = sum(alice_sizes)
+    sum_b = sum(bob_sizes)
+    a = sorted(set(alice_sizes))
+    b = sorted(set(bob_sizes))
+    i = 0
+    j = 0
+    while sum_a - a[i] + b[j] != sum_b - b[j] + a[i]:
+        if sum_a - a[i] + b[j] > sum_b - b[j] + a[i]:
+            i += 1
+        else:
+            j += 1
+    return [a[i], b[j]]
 
 
 print(fair_candy_swap([1, 1], [2, 2]))  # [1, 2]
 print(fair_candy_swap([1, 2], [2, 3]))  # [1, 2]
 print(fair_candy_swap([2], [1, 3]))  # [2, 3]
+print(fair_candy_swap([1, 2, 5], [2, 4]))  # [5, 4]

@@ -16,14 +16,13 @@
 # 1 <= m * n <= 105
 # -109 <= matrix[i][j] <= 109
 def transpose(matrix: list[list[int]]) -> list[list[int]]:
-    transpose = [[0] * len(matrix)] * len(matrix[0])
-    print(transpose)
-    for i in range(len(matrix)):
-        print(f'i = {i}')
-        for j in range(i+1, len(matrix)):
-            print(f'j = {j}')
-            transpose[j][i] = matrix[i][j]
-    return transpose
+    result = []
+    for i in range(len(matrix[0])):
+        temp = []
+        for j in range(len(matrix)):
+            temp.append(matrix[j][i])
+        result.append(temp)
+    return result
 
 
 print(transpose([[1, 2, 3], [4, 5, 6], [7, 8, 9]]))  # [[1, 4, 7], [2, 5, 8], [3, 6, 9]]

@@ -18,7 +18,7 @@ def long_pressed(text: str, typed: str) -> bool:
     if text == typed:
         return False
     a = False
-    for i, j in zip(map(str, text.split()), map(str, typed.split())):
+    for i, j in zip(text.split(), typed.split()):
         if set(i) == set(j):
             for k in set(i):
                 if i.count(k) <= j.count(k):

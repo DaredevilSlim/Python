@@ -39,15 +39,19 @@
 # 1 <= strs[i].length <= 1000
 # strs[i] consists of lowercase English letters.
 def min_deletion_size(strs: list[str]) -> int:
-    count = len(strs)
-    for i in strs:
-        sorted_str = ''.join(sorted(letter for letter in i))
-        print(f'str = {i}, sorted_str = {sorted_str}, sorted_str[::-1] = {sorted_str[::-1]}')
-        if i == sorted_str or i == sorted_str[::-1]:
-            count -= 1
+    count = 0
+    for i in range(len(strs[0])):
+        temp = 0
+        for j in range(len(strs)):
+            value = ord(strs[j][i])
+            if value < temp:
+                count += 1
+                break
+            temp = value
     return count
 
 
 print(min_deletion_size(['cba', 'daf', 'ghi']))  # 1
 print(min_deletion_size(['a', 'b']))  # 0
 print(min_deletion_size(['zyx', 'wvu', 'tsr']))  # 3
+print(min_deletion_size(['rrjk', 'furt', 'guzm']))  # 3

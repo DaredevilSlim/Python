@@ -19,12 +19,10 @@
 # 3 <= nums.length <= 104
 # 1 <= nums[i] <= 106
 def largest_perimeter(nums: list[int]) -> int:
-    largest = 0
-    nums = sorted(nums)[::-1]
+    nums = sorted(nums, reverse=True)
     for i in range(len(nums) - 2):
-        for j in range(i + 1, len(nums) - 1):
-            if (nums[i] + nums[j]) > nums[j + 1] > abs(nums[i] - nums[j]):
-                return nums[i] + nums[j] + nums[j + 1]
+        if nums[i] < nums[i + 1] + nums[i + 2]:
+            return nums[i] + nums[i + 1] + nums[i + 2]
     return 0
                 
 

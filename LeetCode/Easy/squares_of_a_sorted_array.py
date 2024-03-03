@@ -25,16 +25,15 @@ def sorted_squares(nums: list[int]) -> list[int]:
         if i < 0:
             temp.append(t)
         elif temp:
-            if temp[-1] < t:
-                res += [temp[-1]] + [t]
-                temp = temp[:-1]
-            else:
-                res.append(t)
+            while temp[-1] < t:
+                res.append(temp[-1])
+                temp.pop()
+                if not temp:
+                    break
+            res.append(t)
         else:
             res.append(t)
-    return res
-
-    # return sorted(map(lambda x: x ** 2, nums))
+    return res + temp[::-1]
 
 
 print(sorted_squares([-4, -1, 0, 3, 10]))  # [0, 1, 9, 16, 100]

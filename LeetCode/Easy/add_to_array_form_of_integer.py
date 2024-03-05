@@ -23,23 +23,28 @@
 # 1 <= k <= 104
 def add_to_array_form(num: list[int], k: int) -> list[int]:
     k_list = [int(i) for i in str(k)][::-1]
-    r_num = num[::-1]
+    num = num[::-1]
     i = 0
-    t = 0
-    print(f'{k_list[i]} + {r_num[i]} + {t} = {k_list[i] + r_num[i] + t}')
-    while r_num[i] + t < 10 or i < len(k_list):
-        s = r_num[i] + t
-        if s > 10:
-            t = s - 10
-            r_num[i] = 0
+    while i < len(k_list):
+        if not num[i:]:
+            num.append(0)
+        s = k_list[i] + num[i]
+        if s >= 10:
+            num[i] = s - 10
+            if not k_list[i + 1:]:
+                k_list.append(1)
+            else:
+                k_list[i + 1] += 1
         else:
-            r_num[i] = s
+            num[i] = s
         i += 1
-    return r_num[::-1]
+    return num[::-1]
 
 
+print(add_to_array_form([0], 23))  # [2, 3]
 print(add_to_array_form([1, 2, 0, 0], 34))  # [1, 2, 3, 4]
-print(add_to_array_form([2, 7, 4], 181))  # [4, 5, 5]
-print(add_to_array_form([2, 1, 5], 806))  # [1, 0, 2, 1]
-print(add_to_array_form([1, 2, 0, 0, 9, 9], 34))  # [1, 2, 0, 1, 3, 3]
 print(add_to_array_form([9, 9, 9, 9, 9, 9, 9, 9, 9, 9], 1))  # [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+print(add_to_array_form([2, 7, 4], 181))  # [4, 5, 5]
+print(add_to_array_form([1, 2, 0, 0, 9, 9], 34))  # [1, 2, 0, 1, 3, 3]
+print(add_to_array_form([2, 1, 5], 806))  # [1, 0, 2, 1]
+

@@ -26,8 +26,8 @@
 def arithmetic_triplets(nums: list[int], diff: int) -> int:
     count = 0
     i = 0
-    j = 1
     while i < len(nums) - 2:
+        j = i + 1
         while j < len(nums) - 1 and nums[j] - nums[i] <= diff:
             if nums[j] - nums[i] == diff:
                 k = j + 1

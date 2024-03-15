@@ -26,4 +26,5 @@ def sort_sentence(s: str) -> str:
     return ' '.join(i[:-1] for i in sorted(s.split(), key=lambda x: x[-1]))
 
 
-print(sort_sentence('is2 sentence4 This1 a3'))
+print(sort_sentence('is2 sentence4 This1 a3'))  # 'This is a sentence'
+print(sort_sentence('Myself2 Me1 I4 and3'))  # 'Me Myself and I'

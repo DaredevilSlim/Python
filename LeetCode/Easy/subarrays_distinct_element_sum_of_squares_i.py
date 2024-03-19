@@ -31,9 +31,12 @@
 # 1 <= nums.length <= 100
 # 1 <= nums[i] <= 100
 def sum_counts(nums: list[int]) -> int:
-    count = len(nums)
+    count = 0
     for i in range(len(nums)):
+        for j in range(i, len(nums)):
+            count += len(set(nums[i:j+1])) ** 2
+    return count
 
 
-
-
+print(sum_counts([1, 2, 1]))  # 15
+print(sum_counts([1, 1]))  # 3

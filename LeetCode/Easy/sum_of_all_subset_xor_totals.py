@@ -36,18 +36,7 @@
 # 1 <= nums.length <= 12
 # 1 <= nums[i] <= 20
 def subset_xor_sum(nums: list[int]) -> int:
-    count = 0
-    new = []
-    for i in range(len(nums)):
-        for j in range(i, len(nums)):
-            if list(set([nums[i]] + [nums[j]])) not in new:
-                new.append(list(set([nums[i]] + [nums[j]])))
-            if list(set(nums[i:j+1])) not in new:
-                new.append(list(set(nums[i:j+1])))
-    for k in new:
-        count += eval('^'.join(map(str, k)))
-    #print(new)
-    return count
+    pass
 
 
 print(subset_xor_sum([1, 3]))  # 6

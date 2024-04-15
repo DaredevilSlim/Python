@@ -41,15 +41,16 @@
 def merge_similar_items(items1: list[list[int]], items2: list[list[int]]) -> list[list[int]]:
     one = dict(items1)
     two = dict(items2)
-    if len(items2) > len(items1):
-        one, two = two, one
-    result = []
-    for i in one:
-        result.append([i, one[i] + (two[i] if i in two else 0)])
-    return result
+    for i in two:
+        if i not in one:
+            one[i] = two[i]
+        else:
+            one[i] += two[i]
+    return sorted([[key, value] for key, value in zip(one.keys(), one.values())])
 
 
 print(merge_similar_items([[1, 1], [4, 5], [3, 8]], [[3, 1], [1, 5]]))  # [[1, 6], [4, 5], [3, 9]]
 print(merge_similar_items([[1, 1], [3, 2], [2, 3]], [[2, 1], [3, 2], [1, 3]]))  # [[1, 4], [3, 4], [2, 4]]
 print(merge_similar_items([[1, 3], [2, 2]], [[7, 1], [2, 2], [1, 4]]))  # [[7, 1], [2, 4], [1, 7]]
-print(merge_similar_items([[5, 1], [4, 2], [3, 3], [2, 4], [1, 5]], [[7, 1], [6, 2], [5, 3], [4, 4]]))  # [[7, 1], [2, 4], [1, 7]]
+print(merge_similar_items([[5, 1], [4, 2], [3, 3], [2, 4], [1, 5]],
+                          [[7, 1], [6, 2], [5, 3], [4, 4]]))  # [[1, 5], [2, 4], [3, 3], [4, 6], [5, 4], [6, 2], [7, 1]]

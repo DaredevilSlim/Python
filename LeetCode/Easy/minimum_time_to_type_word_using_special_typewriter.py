@@ -47,22 +47,25 @@
 # word consists of lowercase English letters.
 def min_time_to_type(word: str) -> int:
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
-    a = alphabet.index(word[0])
-    b = min(a - 0, 25 - a + 25 - 0)
-    result = b + 1
-    i = 1
+    result = 0
+    i = 0
+    a = 0
     while i < len(word):
-        c = alphabet.index(word[i])
-        print(f'before: a = {a}, c = {c}, result = {result}')
-        b = min(abs(a - c), 25 - a + c)
-        print(f'b = {b}')
-        result += b + 1
-        a = c
-        print(f'after: a = {a}, c = {c}, result = {result}')
+        b = alphabet.index(word[i])
+        one = abs(a - b)
+        two = (25 - b + a) + 1
+        three = ((b + a) % 25) + 1
+        print(f'b = {b}, one = {one}, two = {two}, three = {three}, word[i] = {word[i]}')
+        c = min(one, two, three)
+        result += c + 1
+        # print(f'b = {b}, c = {c}, result = {result}, word[i] = {word[i]}')
+        a = b
         i += 1
     return result
 
 
-# print(min_time_to_type('abc'))  # 5
+print(min_time_to_type('abc'))  # 5
 print(min_time_to_type('bza'))  # 7
-# print(min_time_to_type('zjpc'))  # 34
+print(min_time_to_type('zjpc'))  # 34
+print(min_time_to_type('pdy'))  # 31
+print(min_time_to_type('evbedrhwy'))  # 31

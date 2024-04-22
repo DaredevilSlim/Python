@@ -52,13 +52,11 @@ def min_time_to_type(word: str) -> int:
     a = 0
     while i < len(word):
         b = alphabet.index(word[i])
-        one = abs(a - b)
-        two = (25 - b + a) + 1
-        three = ((b + a) % 25) + 1
-        print(f'b = {b}, one = {one}, two = {two}, three = {three}, word[i] = {word[i]}')
-        c = min(one, two, three)
+        one = 26 - b + a
+        two = abs(a - b) % 26
+        print(f'one = {one}, two = {two}')
+        c = min(one, two)
         result += c + 1
-        # print(f'b = {b}, c = {c}, result = {result}, word[i] = {word[i]}')
         a = b
         i += 1
     return result

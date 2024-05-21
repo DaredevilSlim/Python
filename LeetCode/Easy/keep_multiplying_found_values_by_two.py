@@ -32,3 +32,4 @@ def find_final_value(nums: list[int], original: int) -> int:
 
 print(find_final_value([5, 3, 6, 1, 12], 3))  # 24
 print(find_final_value([2, 7, 9], 4))  # 24
+print(find_final_value([2, 7, 9, 12], 12))  # 24

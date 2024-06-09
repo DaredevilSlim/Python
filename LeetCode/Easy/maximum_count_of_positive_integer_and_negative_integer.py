@@ -26,6 +26,8 @@
 def maximum_count(nums: list[int]) -> int:
     neg = 0
     pos = 0
+    if nums[-1] < 0 or nums[0] > 0:
+        return len(nums)
     for i in nums:
         if i < 0:
             neg += 1

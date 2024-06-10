@@ -30,6 +30,14 @@
 # 0 <= distance[i] <= 50
 def check_distances(s: str, distance: list[int]) -> bool:
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    for i in range(len(distance)):
+        if alphabet[i] in s:
+            letter = alphabet[i]
+            first = s.index(letter)
+            second = s[first + 1:].index(letter)
+            if second != distance[i]:
+                return False
+    return True
 
 
 print(check_distances('abaccb', [1, 3, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0,

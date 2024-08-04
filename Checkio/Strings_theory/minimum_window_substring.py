@@ -10,18 +10,25 @@
 # Output: Tuple of two integers (int).
 # Precondition: all letters in pattern are unique.
 def window(line: str, pattern: str) -> tuple[int, int]:
-    result_list = []
-    d = dict()
+    result = -1, -1
     for i in range(len(line)):
-        if line[i] in pattern:
-            if line[i] in d:
-                d[line[i]] += [i]
+        temp = []
+        for j in pattern:
+            if j not in line[i:]:
+                break
             else:
-                d[line[i]] = [i]
-    print(d)
-    return -1, -1
+                temp.append(i + line[i:].index(j))
+        if len(temp) == len(pattern):
+            min_index = min(temp)
+            max_index = max(temp) + 1
+            if result == (-1, -1):
+                result = (min_index, max_index)
+            elif result[1] - result[0] > max_index - min_index:
+                result = (min_index, max_index)
+    return result
 
 
+print("ADOBECODEBANC".index('Z'))
 print(window("ADOBECODEBANC", "ABC"))  # (9, 13)
 print(window("ab", "a"))  # (0, 1)
 print(window("ab", "A"))  # (-1, -1)

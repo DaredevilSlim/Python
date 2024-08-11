@@ -711,7 +711,10 @@ print(re.findall(r'a|b', 'c d d b'))         # Вывод: ['b']
 print(re.findall(r'(abc)', 'ab bc abc ac'))  # Вывод: ['abc']
 print(re.findall(r'(abc)', 'ab bc ac'))      # Вывод: []
 print(re.findall(r'[^a]', 'abcde'))          # Вывод: ['b', 'c', 'd', 'e']
-#
+
+
+# 2.4.4. Анализ совпадений
+print('2.4.4. Анализ совпадений')
 #
 #
 #

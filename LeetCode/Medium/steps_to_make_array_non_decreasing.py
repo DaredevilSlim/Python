@@ -25,11 +25,17 @@ def total_steps(nums: list[int]) -> int:
     while start > 0:
         start = 0
         i = 1
+        temp = []
         while i < len(nums):
             if nums[i - 1] > nums[i]:
-                nums.pop(i)
+                temp.append(i)
                 start += 1
             i += 1
+        j = 0
+        temp = temp[::-1]
+        while j < len(temp):
+            nums.pop(temp[j])
+            j += 1
         if start > 0:
             count += 1
     return count

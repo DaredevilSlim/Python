@@ -20,6 +20,7 @@
 # 1 <= nums.length <= 105
 # 1 <= nums[i] <= 109
 def total_steps(nums: list[int]) -> int:
+    '''
     start = len(nums)
     count = 0
     while start > 0:
@@ -39,8 +40,41 @@ def total_steps(nums: list[int]) -> int:
         if start > 0:
             count += 1
     return count
+    '''
+    start = len(nums)
+    count = 0
+    while start > 0:
+        start = 0
+        i = 1
+        temp = []
+        print(f'step before {nums}')
+        while i < len(nums):
+            print(f'temp before {temp}')
+            if nums[i - 1] > nums[i]:
+                print(f'outside if {nums[i - 1]} > {nums[i]} = {nums[i - 1] > nums[i]}')
+                j = i - 1
+                i += 1
+                while i < len(nums) and nums[i - 1] > nums[i]:
+                    print(f'inside {nums[i - 1]} > {nums[i]} = {nums[i - 1] > nums[i]}')
+                    i += 1
+                temp.append(nums[j])
+                start += 1
+                print(f'if temp after {temp}')
+            else:
+                print(f'outside else {nums[i - 1]} > {nums[i]} = {nums[i - 1] > nums[i]}')
+                temp.append(nums[i])
+                i += 1
+                print(f'else temp after {temp}')
+            print(f'temp after {temp}')
+
+        if start > 0:
+            count += 1
+        nums = temp if temp != [] else nums
+        print(f'step after {nums}')
+    return count
             
             
 print(total_steps([5, 3, 4, 4, 7, 3, 6, 11, 8, 5, 11]))  # 3
 print(total_steps([4, 5, 7, 7, 13]))  # 0
 print(total_steps([10, 6, 5, 10, 15]))  # 1
+print(total_steps([10, 1, 2, 3, 4, 5, 6, 1, 2, 3]))  # 1

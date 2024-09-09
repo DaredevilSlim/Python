@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+from pygments.lexer import default
+
 
 # In a crossword game, the player fills a rectangle with black and white squares, where each blank row and column must
 # be filled with a word. The horizontal words intersect with the vertical words in common letters. In this mission only
@@ -12,10 +14,7 @@
 # Input: Two uppercase strings (str).
 # Output: Tuple of two integers (int).
 def crossed_words(hor: str, ver: str) -> tuple[int, int]:
-    crossed = [hor[i] for i in range(len(hor)) if hor[i] in ver]
-    if crossed:
-        return hor.rindex(crossed[-1]) + 1, ver.rindex(crossed[-1]) + 1
-    return -1, -1
+    return max(((hor.rindex(c) + 1, ver.rindex(c) + 1) for c in set(hor) & set(ver)), default = (-1, -1))
 
 
 print(crossed_words('PATO', 'PELE'))  # (1, 1)

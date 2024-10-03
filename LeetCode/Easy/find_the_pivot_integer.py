@@ -20,21 +20,19 @@
 # Constraints:
 # 1 <= n <= 1000
 def pivot_integer(n: int) -> int:
-    one = [1]
-    for i in range(2, n + 1):
-        one.append(one[-1] + i)
-    two = [n]
-    for j in range(n - 1, 0, -1):
-        value = two[-1] + j
-        two.append(value)
-    print(f'one = {one}, two = {two}')
-    for k in range(1, n):
-        if one[k] == two[k]:
-            return k
-
-    return -1
+    i, j = 0, n
+    one, two = 0, 0
+    while i <= j:
+        if one < two:
+            one += i
+            i += 1
+        else:
+            two += j
+            j -= 1
+    return i if one + i == two else -1
 
 
 print(pivot_integer(8))  # 6
 print(pivot_integer(1))  # 1
 print(pivot_integer(4))  # -1
+print(pivot_integer(49))  # 35

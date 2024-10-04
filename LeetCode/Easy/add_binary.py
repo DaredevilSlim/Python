@@ -13,7 +13,7 @@
 # a and b consist only of '0' or '1' characters.
 # Each string does not contain leading zeros except for the zero itself.
 def add_binary(a: str, b: str) -> str:
-    return bin(int(a, 2) + int(b, 2))[2:]
+    return f'{int(a, 2) + int(b, 2):b}'
 
 
 print(add_binary('11', '1'))  # '100'
